@@ -45,5 +45,326 @@
 \tableofcontents
 \newpage
 %
-\section{Section 1}
+\section{Differential Equations}
+The study of differential equations (DE) finds techniques to solve equations relating unknown functions with their derivatives.
+These equations allow us to model and predict the behaviour of systems evolving over time or any other dimension.
+\subsection{Ordinary and Partial Differential Equations}
+Differential equations fall into one of two categories:
+\begin{itemize}
+    \item \emph{Ordinary differential equations} (ODE) --- derivatives are taken with respect to only one variable.
+    \item \emph{Partial differential equations} (PDE) --- derivatives are taken with respect to several variables.
+\end{itemize}
+Some examples of ODEs are shown below:
+\begin{align*}
+    \odv{y}{t}                                & = ky                    &  & (\text{Exponential growth})      \\
+    \odv{y}{t}                                & = k\left( A - y \right) &  & (\text{Newton's law of cooling}) \\
+    m \odv[order=2]{x}{t} + c \odv{x}{t} + kx & = f\left( t \right)     &  & (\text{Mechanical vibrations})
+\end{align*}
+where \(x\), \(y\), and \(f\) are functions of time - \(t\).
+Below are some examples of PDEs:
+\begin{align*}
+    \pdv{u}{t} + c \pdv{u}{x} & = 0                    &  & (\text{Transport equation}) \\
+    \pdv{u}{t}                & = k\pdv[order=2]{u}{x} &  & (\text{Heat equation})      \\
+    \symbf{\Delta}u           & = 0                    &  & (\text{Laplace's equation})
+\end{align*}
+where \(u\) is typically a function of space \(\left( x,\: y,\: z \right)\) or space-time \(\left( x,\: y,\: z,\: t \right)\).
+\subsection{Order}
+The order of a differential equation refers to the highest derivative term that appears in the equation.
+\subsection{Linearity}
+A linear ODE is defined by a linear polynomial in the unknown function and its derivatives:
+\begin{equation*}
+    a_n\left( t \right) y^{\left( n \right)} + \cdots + a_2\left( t \right) y'' + a_1\left( t \right) y' + a_0\left( t \right) y = f\left( t \right).
+\end{equation*}
+Here the notation \(y^{\left( n \right)}\) denotes the \(n\)th derivative of \(y\), and we use this in-place of the apostrophe (\('\)) for compactness.
+Note that the function \(y\) itself, can be thought of as the ``0''th derivative of \(y\).
+
+Any ODE that cannot be expressed in the above form is nonlinear.
+
+We can also classify PDEs in a similar manner. We will only consider a second-order linear PDE for brevity:
+\begin{equation*}
+    A\left( x,\: y \right) u_{xx} + B\left( x,\: y \right) u_{xy} + C\left( x,\: y \right) u_{yy} + D\left( x,\: y \right) u_x + E\left( x,\: y \right) u_y + F\left( x,\: y \right) u = f\left( x,\: y \right)
+\end{equation*}
+where we have a linear combination of second-order partial derivatives of \(u\).
+Due to the complexity of PDEs, other classifications also exist, but these will not be discussed.
+\subsection{Homogeneity}
+Finally, a differential equation is homogeneous when it is an equation consisting only of the unknown function and its derivatives. In other words,
+there are no constant terms (or functions).
+
+Both ODEs and PDEs are classified by the same rules, below is an example of homogeneous DEs:
+\begin{align*}
+    a y'' + b y' + c y                         & = 0  \\
+    \pdv[order=2]{u}{x} + k\pdv[order=2]{u}{t} & = 0.
+\end{align*}
+As we will see in further sections, differential equations are often simpler to solve when they are homogeneous.
+\subsection{Useful Theorems}
+\begin{theorem}[Existence and Uniqueness Theorem\footnote{Also known as the Picard-Lindel\"{o}f Theorem}]
+    Let the functions \(f\) and \(\pdv{f}{y}\) be Lipschitz continuous\footnote{When \(f\) and \(\pdv{f}{y}\) are \emph{continuous}, then a solution exists with no information about its uniqueness. See the Peano Existence Theorem for more information.}
+    on the closed rectangle \(D \subseteq \R\) with \(\left( t_0,\: y_0 \right) \in D\).
+    Then there exists some interval \(I \subseteq D\), centred on \(t_0\) such that there is a unique solution to the initial value problem:
+    \begin{equation*}
+        \begin{cases}
+            y'\left( t \right) = f\left( t,\: y \right) \\
+            y\left( t_0 \right) = y_0
+        \end{cases}
+    \end{equation*}
+\end{theorem}
+\begin{corollary}[Existence and Uniqueness Theorem for Higher-Order ODEs]
+    Let the functions \(\pdv[order=i]{f}{y}\) for all \(i = 0,\: 1,\: \dots,\: n - 1\), be Lipschitz continuous
+    on the closed \(\left( n+1 \right)\)-dimensional hyperrectangle \(D \subseteq \R \times \R^n\) with \(\left( t_0,\: y_0,\: y_0',\: y_0'',\: \dots,\: y_0^{\left( n-1 \right)} \right) \in D\).
+    Then there exists some interval \(I \subseteq D\) containing \(t_0\), such that there is a unique solution to the initial value problem:
+    \begin{equation*}
+        \begin{cases}
+            y^{\left( n \right)} \left( t \right) = f\left( t,\: y,\: y',\: y'',\: \dots,\: y^{n-1}  \right) \\
+            y^{\left( i \right)}\left( t_0 \right) = y_0^{\left( i \right)}
+        \end{cases}
+    \end{equation*}
+    for all \(i = 0,\: 1,\: \dots,\: n - 1\). Note that \(y_0^{\left( i \right)}\) is the constant value associated with the initial value of the \(i\)th derivative of \(y\) at \(t_0\).
+\end{corollary}
+\begin{theorem}[Principle of Superposition]
+    If \(y_1\) is a solution to the equation
+    \begin{equation*}
+        ay'' + by' + cy = f_1\left( t \right),
+    \end{equation*}
+    and \(y_2\) are solutions to
+    \begin{equation*}
+        ay'' + by' + cy = f_2\left( t \right),
+    \end{equation*}
+    then for any constants \(c_1\) and \(c_2\), the linear combination \(y = c_1 y_1 + c_2 y_2\) is a solution to the differential equation
+    \begin{equation*}
+        ay'' + by' + cy = c_1 f_1\left( t \right) + c_2 f_2\left( t \right).
+    \end{equation*}
+\end{theorem}
+\begin{proof}
+    We can prove the above result through substitution,
+    \begin{align*}
+        ay'' + by' + cy & = a\left( c_1 y_1 + c_2 y_2 \right)'' + b\left( c_1 y_1 + c_2 y_2 \right)' + c\left( c_1 y_1 + c_2 y_2 \right) \\
+                        & = a c_1 y_1'' + a c_2 y_2'' + b c_1 y_1' + b c_2 y_2' + c c_1 y_1 + c c_2 y_2                                  \\
+                        & = c_1 \left( a y_1'' + b y_1' + c y_1 \right) + c_2 \left( a y_2'' + b y_2' + c y_2 \right)                    \\
+                        & = c_1 f_1\left( t \right) + c_2 f_2\left( t \right)
+    \end{align*}
+    A similar proof demonstrates that this principle also applies for higher-order linear ODEs.
+\end{proof}
+\section{Constant Coefficient ODEs}
+A constant coefficient ODE is a linear ODE with coefficients that do not depend on the independent variable:
+\begin{equation*}
+    a_n y^{\left( n \right)} + \cdots + a_2 y'' + a_1 y' + a_0 y = f\left( t \right).
+\end{equation*}
+This type of ODE is typically solved via \emph{Undetermined Coefficients} or \emph{Variation of Parameters}.
+\subsection{Undetermined Coefficients}
+Consider the second-order constant coefficient ODE:
+\begin{equation*}
+    a y'' + b y' + c y = f\left( t \right).
+\end{equation*}
+Recall the superposition principle which allows us to express solutions as
+\begin{equation*}
+    y = c_1 y_1 + c_2 y_2.
+\end{equation*}
+Let us assume that \(y_1\) is a solution to the \emph{homogeneous} ODE, that is, when \(f\left( t \right) = 0\),
+denoted \(y_h\), for the ``homogeneous solution''.
+
+Let us also assume that \(y_2\) is a solution to the \emph{nonhomogeneous} ODE,
+denoted \(y_p\), for the ``particular solution''.
+
+By solving each part individually, we can construct a \emph{general} solution for this ODE via the superposition principle
+\begin{equation*}
+    y = c_1 y_h + c_2 y_p.
+\end{equation*}
+\subsection{Homogeneous Solution}
+We will assume\footnote{A common term for such assumptions is also \emph{ansatz}.} that the solution \(y_h\) has the form
+\begin{equation*}
+    y_h\left( t \right) = e^{r t}.
+\end{equation*}
+Let us then substitute this into the homogeneous ODE:
+\begin{align*}
+    ay_h'' + by_h' + cy_h                                           & = 0 \\
+    a\left( e^{r t} \right)'' + b\left( e^{r t} \right)' + ce^{r t} & = 0 \\
+    a r^2 e^{r t} + b r e^{r t} + c e^{r t}                         & = 0 \\
+    \left( a r^2 + b r + c \right) e^{r t}                          & = 0 \\
+    a r^2 + b r + c                                                 & = 0
+\end{align*}
+This result is known as the \textbf{characterisic equation} (or \textbf{auxiliary equation}) of our ODE.
+Solving the \emph{roots} of this algebraic equation allows us to find \(y_h\).
+
+As this is a polynomial expression, we expect three kinds of solutions:
+\begin{itemize}
+    \item Real distinct roots: \(r_1,\: r_2 \in \R\) --- \(\Delta > 0\)
+    \item Complex conjugate roots: \(r_1,\: r_2 \in \C\) --- \(\Delta < 0\)
+    \item Real repeated roots: \(r \in \R\) --- \(\Delta = 0\)
+\end{itemize}
+where \(\Delta\) is the discriminant given by \(\Delta = b^2 - 4ac\).
+\subsubsection{Real Distinct Roots}
+Given real distinct roots \(r_1\) and \(r_2\), the homogeneous solution is given by
+\begin{equation*}
+    y_h = c_1 e^{r_1 t} + c_2 e^{r_2 t}
+\end{equation*}
+where we use the principle of superposition to combine the solution from both roots.
+\subsubsection{Complex Conjugate Roots}
+Given complex conjugate roots \(r_1 = \alpha + \beta i\) and \(r_2 = r_1^\ast = \alpha - \beta i\),
+the homogeneous solution is given by
+\begin{equation*}
+    y_h = k_1 e^{\left( \alpha + \beta i \right) t} + k_2 e^{\left( \alpha - \beta i \right) t}.
+\end{equation*}
+We can then simplify this solution using Euler's identity.
+\begin{align*}
+    y_h & = e^{\alpha t} \left( k_1 e^{\beta i t} + k_2 e^{-\beta i t} \right)                                                                                                                            \\
+        & = e^{\alpha t} \left[ k_1 \left( \cos{\left( \beta t \right)} + i\sin{\left( \beta t \right)} \right) + k_2 \left( \cos{\left( \beta t \right)} - i\sin{\left( \beta t \right)} \right) \right] \\
+        & = e^{\alpha t} \left[ k_1 \cos{\left( \beta t \right)} + i k_1 \sin{\left( \beta t \right)} + k_2 \cos{\left( \beta t \right)} - i k_2 \sin{\left( \beta t \right)} \right]                     \\
+        & = e^{\alpha t} \left[ \left( k_1 + k_2 \right) \cos{\left( \beta t \right)} + i \left( k_1 - k_2 \right) \sin{\left( \beta t \right)} \right]                                                   \\
+        & = e^{\alpha t} \left[ c_1 \cos{\left( \beta t \right)} + c_2 \sin{\left( \beta t \right)} \right]
+\end{align*}
+which demonstrates that complex conjugate roots correspond to oscillatory solutions.
+\subsubsection{Real Repeated Roots}
+When \(r = -\frac{b}{2a}\) is a repeated root, one solution is given by
+\begin{equation*}
+    y_{h,1} = e^{rt}.
+\end{equation*}
+However, this solution lacks linear independence\footnote{We will discuss linear independence in a later section.} from the other solution as \(r\) has multiplicity 2.
+In the following section, we will use the method of \emph{Reduction of Order} to find the second solution.
+\subsection{Reduction of Order}
+The reduction of order method is a method for converting any linear ODE to another linear ODE of lower order.
+If the solution \(y_1\) is known in advance, we can construct additional solutions via the following substitution:
+\begin{equation*}
+    y_2 = u\left( t \right) y_1.
+\end{equation*}
+\subsubsection{Finding the Missing Solutions of the Repeated Roots Problem}
+In the previous section, we were unable to find a complete set of homogeneous solutions to our ODE.
+Therefore let us use this new method to find a linearly independent solution to \(y_{h,1}\):
+\begin{equation*}
+    y_{h,2} = u\left( t \right) y_{h,1}.
+\end{equation*}
+Before we can substitute this equation into the ODE, let us find its first and second derivatives:
+\begin{gather*}
+    y_{h,2}' = u' y_{h,1} + u y_{h,1}' \\
+    y_{h,2}'' = u'' y_{h,1} + u' y_{h,1}' + u' y_{h,1}' + u y_{h,1}'' = u'' y_{h,1} + 2u' y_{h,1}' + u y_{h,1}''
+\end{gather*}
+We can now substitute this equation into the homogeneous ODE:
+\begin{align*}
+    a y_{h,2}'' + b y_{h,2}' + c y_{h,2}                                                                               & = 0 \\
+    a \left( u'' y_{h,1} + 2u' y_{h,1}' + u y_{h,1}'' \right) + b \left( u' y_{h,1} + u y_{h,1}' \right) + c u y_{h,1} & = 0 \\
+    a u'' y_{h,1} + 2a u' y_{h,1}' + a u y_{h,1}'' + b u' y_{h,1} + b u y_{h,1}' + c u y_{h,1}                         & = 0 \\
+    a u'' e^{rt} + 2a u' r e^{rt} + a u r^2 e^{rt} + b u' e^{rt} + b u r e^{rt} + c u e^{rt}                           & = 0 \\
+    \left[ a u'' + 2a r u' + a r^2 u + b u' + b r u + c u \right] e^{rt}                                               & = 0 \\
+    a u'' + \left( 2a r + b \right) u' + \left( a r^2 + b r + c \right) u                                              & = 0
+\end{align*}
+As \(r = -\frac{b}{2a}\), the coefficients of both \(u'\) and \(u\) become zero, resulting in:
+\begin{equation*}
+    a u'' = 0
+\end{equation*}
+so that \(u'' = 0\) because \(a \neq 0\). Integrating twice gives the solution:
+\begin{equation*}
+    u\left( t \right) = k_1t + k_2.
+\end{equation*}
+Here we may say \(y_{h,2} = k_1 t e^{rt} + k_2 e^{rt}\),
+however, as \(k_2 e^{rt}\) is linearly dependent to the first solution, we must let \(k_2 = 0\) so that:
+\begin{equation*}
+    y_{h,2} = t e^{rt}.
+\end{equation*}
+Combining both solutions yields the general homogeneous solution:
+\begin{equation*}
+    y = c_1 e^{rt} + c_2 t e^{rt}.
+\end{equation*}
+If follows that this result applies to higher-order linear ODEs with repeated roots of any multiplicity.
+\begin{proposition}
+    A linear homogeneous ODE of order \(n\) with the root \(r\) of multiplicity \(k\) has the basis function:
+    \begin{equation*}
+        y = e^{r t} \left( 1 + t + t^2 + \cdots + t^k \right).
+    \end{equation*}
+\end{proposition}
+\subsection{Linear Independence}
+The existence and uniqueness theorem implies that an \(n\)th order homogeneous linear ODE has \(n\) linearly independent solutions
+that form a general solution under the principle of superposition:
+\begin{equation*}
+    y = c_1 y_1 + c_2 y_2 + \cdots + c_n y_n.
+\end{equation*}
+However, when given an arbitrary function, as seen in the \emph{Reduction of Order} method,
+we must construct a test for whether two functions are linearly independent using a definitive method.
+\subsection{Test for Linear Independence}
+The set of \(\left( n-1 \right)\)-times differentiable functions \(S = \left\{ y_1,\: y_2,\: \dots,\: y_n \right\}\) is linearly independent iff
+\begin{equation*}
+    c_1 y_1 + c_2 y_2 + \cdots + c_n y_n = 0
+\end{equation*}
+for all \(t\), with nonzero \(c_1,\: \dots,\: c_n\). Let us then differentiate this equation \(n - 1\) times to
+find the following system of equations:
+\begin{equation*}
+    \begin{aligned}
+        c_1 y_1 + c_2 y_2 + \cdots + c_n y_n                                                                & = 0             \\
+        c_1 y_1' + c_2 y_2' + \cdots + c_n y_n'                                                             & = 0             \\
+        c_1 y_1'' + c_2 y_2'' + \cdots + c_n y_n''                                                          & = 0             \\
+                                                                                                            & \vdotswithin{=} \\
+        c_1 y_1^{\left( n-1 \right)} + c_2 y_2^{\left( n-1 \right)} + \cdots + c_n y_n^{\left( n-1 \right)} & = 0
+    \end{aligned}
+\end{equation*}
+which we can express as
+\begin{equation*}
+    \begin{bmatrix}
+        y_1                      & y_2                      & \cdots & y_n                      \\
+        y_1'                     & y_2'                     & \cdots & y_n'                     \\
+        y_1''                    & y_2''                    & \cdots & y_n''                    \\
+        \vdots                   & \vdots                   & \vdots & \vdots                   \\
+        y_1^{\left( n-1 \right)} & y_2^{\left( n-1 \right)} & \cdots & y_n^{\left( n-1 \right)}
+    \end{bmatrix}
+    \begin{bmatrix}
+        c_1    \\
+        c_2    \\
+        \vdots \\
+        c_n
+    \end{bmatrix}
+    =
+    \begin{bmatrix}
+        0      \\
+        0      \\
+        \vdots \\
+        0
+    \end{bmatrix}.
+\end{equation*}
+Recall from Linear Algebra that the linear system:
+\begin{equation*}
+    \symbf{A} \symbfit{x} = \symbfit{b}
+\end{equation*}
+has a unique solution when \(\vrank{\left( \symbf{A} \right)} =
+\vrank{\left( \begin{bmatrix}[c|c]
+        \symbf{A} & \symbfit{b}
+    \end{bmatrix} \right)} = n\), where \(\symbfit{b} = \symbf{0}\). This is true when the matrix
+\(\symbf{A}\) is invertible, so that
+\begin{align*}
+    \symbf{A} \symbfit{c}                & = \symbf{0}                \\
+    \symbf{A}^{-1} \symbf{A} \symbfit{c} & = \symbf{A}^{-1} \symbf{0} \\
+    \symbfit{c}                          & = \symbf{0}
+\end{align*}
+as required.
+
+Therefore we can conclude that when the determinant of \(\symbf{A}\) is nonzero, the set \(S\) is linearly independent.
+Let us summarise these findings in the following section and introduce the Wronskian matrix.
+\subsection{The Wronskian}
+\begin{definition}[Wronskian Matrix]
+    Given the set of \(\left( n-1 \right)\)-times differentiable functions\linebreak \(S = \left\{ y_1,\: y_2,\: \dots,\: y_n \right\}\),
+    the Wronskian matrix \(\symbf{W}\) is defined as
+    \begin{equation*}
+        \symbf{W} = \begin{bmatrix}
+            y_1                      & y_2                      & \cdots & y_n                      \\
+            y_1'                     & y_2'                     & \cdots & y_n'                     \\
+            y_1''                    & y_2''                    & \cdots & y_n''                    \\
+            \vdots                   & \vdots                   & \vdots & \vdots                   \\
+            y_1^{\left( n-1 \right)} & y_2^{\left( n-1 \right)} & \cdots & y_n^{\left( n-1 \right)}
+        \end{bmatrix}
+    \end{equation*}
+\end{definition}
+The ``Wronskian'' of these functions is given by
+\begin{equation*}
+    W\left[ y_1,\: y_2,\: \dots,\: y_n  \right] = \det{\left( \symbf{W} \right)}.
+\end{equation*}
+\begin{theorem}[Linear Independence and the Wronskian]
+    The set of \(\left( n-1 \right)\)-times differentiable functions \(S = \left\{ y_1,\: y_2,\: \dots,\: y_n \right\}\)
+    is linearly independent if
+    \begin{equation*}
+        W\left[ y_1,\: y_2,\: \dots,\: y_n  \right] \neq 0.
+    \end{equation*}
+    Note that \(W\left[ y_1,\: y_2,\: \dots,\: y_n  \right] = 0\) does not imply that \(S\) is linearly dependent.
+\end{theorem}
+\begin{corollary}
+    If the set \(S\) is linearly dependent, then
+    \begin{equation*}
+        W\left[ y_1,\: y_2,\: \dots,\: y_n  \right] = 0.
+    \end{equation*}
+\end{corollary}
 \end{document}
