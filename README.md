@@ -22,7 +22,8 @@ This repository provides **lecture notes** and **exam notes** for **MXB225 - Mod
 
 ## Contents
 
-1. Section 1
+1. Differential Equations
+2. Constant Coefficient ODEs
 
 ---
 
