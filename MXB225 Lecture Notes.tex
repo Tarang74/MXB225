@@ -149,57 +149,47 @@ A constant coefficient ODE is a linear ODE with coefficients that do not depend 
 \begin{equation*}
     a_n y^{\left( n \right)} + \cdots + a_2 y'' + a_1 y' + a_0 y = f\left( t \right).
 \end{equation*}
-This type of ODE is typically solved via \emph{Undetermined Coefficients} or \emph{Variation of Parameters}.
-\subsection{Undetermined Coefficients}
-Consider the second-order constant coefficient ODE:
-\begin{equation*}
-    a y'' + b y' + c y = f\left( t \right).
-\end{equation*}
-Recall the superposition principle which allows us to express solutions as
-\begin{equation*}
-    y = c_1 y_1 + c_2 y_2.
-\end{equation*}
-Let us assume that \(y_1\) is a solution to the \emph{homogeneous} ODE, that is, when \(f\left( t \right) = 0\),
-denoted \(y_h\), for the ``homogeneous solution''.
-
-Let us also assume that \(y_2\) is a solution to the \emph{nonhomogeneous} ODE,
-denoted \(y_p\), for the ``particular solution''.
-
-By solving each part individually, we can construct a \emph{general} solution for this ODE via the superposition principle
+Using the superposition principle, we can express solutions as
 \begin{equation*}
     y = c_1 y_h + c_2 y_p.
 \end{equation*}
+where:
+\begin{itemize}
+    \item \(y_h\) is a solution to the \emph{homogeneous} ODE, that is, when \(f\left( t \right) = 0\),
+          and is known as the ``homogeneous solution''.
+    \item \(y_p\) is a solution to the \emph{nonhomogeneous} ODE,
+          and is known as the ``particular solution''.
+\end{itemize}
 \subsection{Homogeneous Solution}
-We will assume\footnote{A common term for such assumptions is also \emph{ansatz}.} that the solution \(y_h\) has the form
+As the homogeneous ODE is linear, we will assume\footnote{A common term for such assumptions is also \emph{ansatz}.} that the solution \(y_h\) has the form
 \begin{equation*}
     y_h\left( t \right) = e^{r t}.
 \end{equation*}
 Let us then substitute this into the homogeneous ODE:
 \begin{align*}
-    ay_h'' + by_h' + cy_h                                           & = 0 \\
-    a\left( e^{r t} \right)'' + b\left( e^{r t} \right)' + ce^{r t} & = 0 \\
-    a r^2 e^{r t} + b r e^{r t} + c e^{r t}                         & = 0 \\
-    \left( a r^2 + b r + c \right) e^{r t}                          & = 0 \\
-    a r^2 + b r + c                                                 & = 0
+    a_n y_h^{\left( n \right)} + \cdots + a_2 y_h'' + a_1 y_h' + a_0 y_h     & = 0 \\
+    a_n r^n e^{r t} + \cdots + a_2 r^2 e^{r t} + a_1 r e^{r t} + a_0 e^{r t} & = 0 \\
+    \left( a_n r^n + \cdots + a_2 r^2 + a_1 r + a_0 \right) e^{r t}          & = 0 \\
+    a_n r^n + \cdots + a_2 r^2 + a_1 r + a_0                                 & = 0
 \end{align*}
-This result is known as the \textbf{characterisic equation} (or \textbf{auxiliary equation}) of our ODE.
-Solving the \emph{roots} of this algebraic equation allows us to find \(y_h\).
-
+This result is known as the \textbf{characterisic equation} (also \textbf{complementary equation} or \textbf{auxiliary equation}) of our ODE.
+Finding the \emph{roots} of this algebraic equation allows us to find \(y_h\).
 As this is a polynomial expression, we expect three kinds of solutions:
 \begin{itemize}
-    \item Real distinct roots: \(r_1,\: r_2 \in \R\) --- \(\Delta > 0\)
-    \item Complex conjugate roots: \(r_1,\: r_2 \in \C\) --- \(\Delta < 0\)
-    \item Real repeated roots: \(r \in \R\) --- \(\Delta = 0\)
+    \item Real distinct roots: \(r_1,\: r_2,\: \dots,\: r_k \in \R\)
+    \item Complex conjugate roots: \(r,\: r^\ast \in \C\)
+    \item Real repeated roots: \(r \in \R\)
 \end{itemize}
-where \(\Delta\) is the discriminant given by \(\Delta = b^2 - 4ac\).
+For higher order ODEs that may have real, repeated, and complex roots simultaneously, we can take the linear combination
+of the solutions discussed below.
 \subsubsection{Real Distinct Roots}
-Given real distinct roots \(r_1\) and \(r_2\), the homogeneous solution is given by
+Given real distinct roots \(r_1,\: r_2,\: \dots,\: r_k\), the homogeneous solution is given by
 \begin{equation*}
-    y_h = c_1 e^{r_1 t} + c_2 e^{r_2 t}
+    y_h = c_1 e^{r_1 t} + c_2 e^{r_2 t} \cdots + c_k e^{r_k t}
 \end{equation*}
-where we use the principle of superposition to combine the solution from both roots.
+for \(k \leq n\).
 \subsubsection{Complex Conjugate Roots}
-Given complex conjugate roots \(r_1 = \alpha + \beta i\) and \(r_2 = r_1^\ast = \alpha - \beta i\),
+Given complex conjugate roots \(r = \alpha + \beta i\) and \(r^\ast = \alpha - \beta i\),
 the homogeneous solution is given by
 \begin{equation*}
     y_h = k_1 e^{\left( \alpha + \beta i \right) t} + k_2 e^{\left( \alpha - \beta i \right) t}.
@@ -214,24 +204,24 @@ We can then simplify this solution using Euler's identity.
 \end{align*}
 which demonstrates that complex conjugate roots correspond to oscillatory solutions.
 \subsubsection{Real Repeated Roots}
-When \(r = -\frac{b}{2a}\) is a repeated root, one solution is given by
+When \(r = -\frac{a_1}{2a_2}\) is a repeated root with multiplicity \(k\), a solution is given by
 \begin{equation*}
     y_{h,1} = e^{rt}.
 \end{equation*}
-However, this solution lacks linear independence\footnote{We will discuss linear independence in a later section.} from the other solution as \(r\) has multiplicity 2.
-In the following section, we will use the method of \emph{Reduction of Order} to find the second solution.
+However, as we will see later, this is not sufficient.
 \subsection{Reduction of Order}
 The reduction of order method is a method for converting any linear ODE to another linear ODE of lower order.
 If the solution \(y_1\) is known in advance, we can construct additional solutions via the following substitution:
 \begin{equation*}
     y_2 = u\left( t \right) y_1.
 \end{equation*}
-\subsubsection{Finding the Missing Solutions of the Repeated Roots Problem}
+\subsubsection{Obtaining the General Solution in a Repeated Roots Problem}
 In the previous section, we were unable to find a complete set of homogeneous solutions to our ODE.
-Therefore let us use this new method to find a linearly independent solution to \(y_{h,1}\):
+Therefore let us use this new method to find other solutions that satisfy the homogeneous equation.
 \begin{equation*}
     y_{h,2} = u\left( t \right) y_{h,1}.
 \end{equation*}
+The following example uses a second-order ODE, but the process is applicable in general.
 Before we can substitute this equation into the ODE, let us find its first and second derivatives:
 \begin{gather*}
     y_{h,2}' = u' y_{h,1} + u y_{h,1}' \\
@@ -239,51 +229,56 @@ Before we can substitute this equation into the ODE, let us find its first and s
 \end{gather*}
 We can now substitute this equation into the homogeneous ODE:
 \begin{align*}
-    a y_{h,2}'' + b y_{h,2}' + c y_{h,2}                                                                               & = 0 \\
-    a \left( u'' y_{h,1} + 2u' y_{h,1}' + u y_{h,1}'' \right) + b \left( u' y_{h,1} + u y_{h,1}' \right) + c u y_{h,1} & = 0 \\
-    a u'' y_{h,1} + 2a u' y_{h,1}' + a u y_{h,1}'' + b u' y_{h,1} + b u y_{h,1}' + c u y_{h,1}                         & = 0 \\
-    a u'' e^{rt} + 2a u' r e^{rt} + a u r^2 e^{rt} + b u' e^{rt} + b u r e^{rt} + c u e^{rt}                           & = 0 \\
-    \left[ a u'' + 2a r u' + a r^2 u + b u' + b r u + c u \right] e^{rt}                                               & = 0 \\
-    a u'' + \left( 2a r + b \right) u' + \left( a r^2 + b r + c \right) u                                              & = 0
+    a_2 y_{h,2}'' + a_1 y_{h,2}' + a_0 y_{h,2}                                                                               & = 0 \\
+    a_2 \left( u'' y_{h,1} + 2u' y_{h,1}' + u y_{h,1}'' \right) + a_1 \left( u' y_{h,1} + u y_{h,1}' \right) + a_0 u y_{h,1} & = 0 \\
+    a_2 u'' y_{h,1} + 2a_2 u' y_{h,1}' + a_2 u y_{h,1}'' + a_1 u' y_{h,1} + a_1 u y_{h,1}' + a_0 u y_{h,1}                   & = 0 \\
+    a_2 u'' e^{rt} + 2a_2 u' r e^{rt} + a_2 u r^2 e^{rt} + a_1 u' e^{rt} + a_1 u r e^{rt} + a_0 u e^{rt}                     & = 0 \\
+    \left[ a_2 u'' + 2a_2 r u' + a_2 r^2 u + a_1 u' + a_1 r u + a_0 u \right] e^{rt}                                         & = 0 \\
+    a_2 u'' + \left( 2a_2 r + a_1 \right) u' + \left( a_2 r^2 + a_1 r + a_0 \right) u                                        & = 0
 \end{align*}
-As \(r = -\frac{b}{2a}\), the coefficients of both \(u'\) and \(u\) become zero, resulting in:
+As \(r = -\frac{a_1}{2a_2}\), the coefficients of both \(u'\) and \(u\) become zero, resulting in:
 \begin{equation*}
-    a u'' = 0
+    a_2 u'' = 0
 \end{equation*}
-so that \(u'' = 0\) because \(a \neq 0\). Integrating twice gives the solution:
+so that \(u'' = 0\) because \(a_2 \neq 0\). Integrating twice gives the solution:
 \begin{equation*}
     u\left( t \right) = k_1t + k_2.
 \end{equation*}
-Here we may say \(y_{h,2} = k_1 t e^{rt} + k_2 e^{rt}\),
-however, as \(k_2 e^{rt}\) is linearly dependent to the first solution, we must let \(k_2 = 0\) so that:
+Let \(k_2 = 0\) so that:
 \begin{equation*}
     y_{h,2} = t e^{rt}.
 \end{equation*}
-Combining both solutions yields the general homogeneous solution:
+Finally, combining both solutions yields the general homogeneous solution:
 \begin{equation*}
     y = c_1 e^{rt} + c_2 t e^{rt}.
 \end{equation*}
 If follows that this result applies to higher-order linear ODEs with repeated roots of any multiplicity.
 \begin{proposition}
-    A linear homogeneous ODE of order \(n\) with the root \(r\) of multiplicity \(k\) has the basis function:
+    A linear homogeneous ODE of order \(n\) with the root \(r\) of multiplicity \(k \leq n\) has the fundamental form:
     \begin{equation*}
         y = e^{r t} \left( 1 + t + t^2 + \cdots + t^k \right).
     \end{equation*}
 \end{proposition}
-\subsection{Linear Independence}
-The existence and uniqueness theorem implies that an \(n\)th order homogeneous linear ODE has \(n\) linearly independent solutions
-that form a general solution under the principle of superposition:
+\subsection{Fundamental Set of Solutions}
+When determining the solutions of an \(n\)th order linear homogeneous ODE, we require a \textbf{general} solution \(y_h\) which
+consists of \(n\) linearly independent functions \(y_{h,i}\) (for \(i = 1,\: 2,\: \dots,\: n\)) such that the set of solutions
+form a \textbf{fundamental set of solutions} over the problem domain.
+
+As was alluded to before, this is done by taking the linear combination of each ``basis'' function \(y_{h,i}\),
+to find the general homogeneous solution:
 \begin{equation*}
-    y = c_1 y_1 + c_2 y_2 + \cdots + c_n y_n.
+    y_h = c_1 y_{h,1} + c_2 y_{h,2} + \cdots + c_n y_{h,n}.
 \end{equation*}
-However, when given an arbitrary function, as seen in the \emph{Reduction of Order} method,
-we must construct a test for whether two functions are linearly independent using a definitive method.
-\subsection{Test for Linear Independence}
+This is
+
+To show that a set of functions are linearly independent, we must construct a definitive test, therefore,
+consider the following.
+\subsubsection{Test for Linear Independence}
 The set of \(\left( n-1 \right)\)-times differentiable functions \(S = \left\{ y_1,\: y_2,\: \dots,\: y_n \right\}\) is linearly independent iff
 \begin{equation*}
     c_1 y_1 + c_2 y_2 + \cdots + c_n y_n = 0
 \end{equation*}
-for all \(t\), with nonzero \(c_1,\: \dots,\: c_n\). Let us then differentiate this equation \(n - 1\) times to
+has the trivial solution \(c_1 = \cdots = c_n = 0\), for all \(t\). Let us then differentiate this equation \(n - 1\) times to
 find the following system of equations:
 \begin{equation*}
     \begin{aligned}
@@ -335,7 +330,7 @@ as required.
 
 Therefore we can conclude that when the determinant of \(\symbf{A}\) is nonzero, the set \(S\) is linearly independent.
 Let us summarise these findings in the following section and introduce the Wronskian matrix.
-\subsection{The Wronskian}
+\subsubsection{The Wronskian}
 \begin{definition}[Wronskian Matrix]
     Given the set of \(\left( n-1 \right)\)-times differentiable functions\linebreak \(S = \left\{ y_1,\: y_2,\: \dots,\: y_n \right\}\),
     the Wronskian matrix \(\symbf{W}\) is defined as
@@ -346,12 +341,12 @@ Let us summarise these findings in the following section and introduce the Wrons
             y_1''                    & y_2''                    & \cdots & y_n''                    \\
             \vdots                   & \vdots                   & \vdots & \vdots                   \\
             y_1^{\left( n-1 \right)} & y_2^{\left( n-1 \right)} & \cdots & y_n^{\left( n-1 \right)}
-        \end{bmatrix}
+        \end{bmatrix}.
     \end{equation*}
 \end{definition}
 The ``Wronskian'' of these functions is given by
 \begin{equation*}
-    W\left[ y_1,\: y_2,\: \dots,\: y_n  \right] = \det{\left( \symbf{W} \right)}.
+    W = W\left[ y_1,\: y_2,\: \dots,\: y_n  \right] = \det{\left( \symbf{W} \right)}.
 \end{equation*}
 \begin{theorem}[Linear Independence and the Wronskian]
     The set of \(\left( n-1 \right)\)-times differentiable functions \(S = \left\{ y_1,\: y_2,\: \dots,\: y_n \right\}\)
@@ -359,7 +354,8 @@ The ``Wronskian'' of these functions is given by
     \begin{equation*}
         W\left[ y_1,\: y_2,\: \dots,\: y_n  \right] \neq 0.
     \end{equation*}
-    Note that \(W\left[ y_1,\: y_2,\: \dots,\: y_n  \right] = 0\) does not imply that \(S\) is linearly dependent.
+    Note that the converse does not apply:
+    \(W\left[ y_1,\: y_2,\: \dots,\: y_n  \right] = 0\) does not imply that \(S\) is linearly dependent.
 \end{theorem}
 \begin{corollary}
     If the set \(S\) is linearly dependent, then
@@ -367,4 +363,279 @@ The ``Wronskian'' of these functions is given by
         W\left[ y_1,\: y_2,\: \dots,\: y_n  \right] = 0.
     \end{equation*}
 \end{corollary}
+\subsection{Particular Solution}
+As with the homogeneous solution, the method of \emph{Undetermined Coefficients}
+requires us to guess a solution \(y_p\) based on the form of \(f\left( t \right)\)\footnote{\(f\left( t \right)\) is known as the
+    \textbf{forcing function} or \textbf{input} in the system, and only depends on \(t\).}.
+\subsubsection{Choosing a Particular Solution}
+Consider the vector space of particularly nice functions \(W\) with the basis:
+\begin{equation*}
+    \vbasis{\left( W \right)} = \left\{ 1,\: t^n,\: e^{r t},\: e^{-r t},\: \sin{\left( r t \right)}, \cos{\left( r t \right)} \right\}
+\end{equation*}
+for all \(n \in \N_{>0}\) and \(r \in \R_{>0}\).
+
+If \(f\) can be written as a linear combination or product of functions in \(W\),
+then we can construct a particular solution \(y_p\) that satisfies the nonhomogeneous ODE.
+The table below shows the choice of \(y_p\) for various \(f\).
+\begin{table}[H]
+    \centering
+    \begin{tabular}{c | c}
+        \toprule
+        \textbf{Form of \(f\)}                                   & \textbf{Particular Solution \(y_p\)}                                                                                                                                               \\
+        \midrule
+        \(P_n\left( t \right)\)                                  & \(\displaystyle \sum_{i = 0}^n A_i t^i\)                                                                                                                                           \\
+        \(e^{r t}\)                                              & \(C e^{r t}\)                                                                                                                                                                      \\
+        \(T\left( \omega t \right)\)                             & \(K \cos{\left( \omega t \right)} + M \sin{\left( \omega t \right)}\)                                                                                                              \\
+        \midrule
+        \(P_n\left( t \right) e^{r t}\)                          & \(\displaystyle \left( \sum_{i = 0}^n A_i t^i \right) e^{r t}\)                                                                                                                    \\
+        \(e^{r t} T\left( \omega t \right)\)                     & \(\displaystyle e^{r t} \left[ K \cos{\left( \omega t \right)} + M \sin{\left( \omega t \right)} \right]\)                                                                         \\
+        \(P_n\left( t \right) e^{r t} T\left( \omega t \right)\) & \(\displaystyle e^{r t} \left[ \left( \sum_{i = 0}^n K_i t^i \right) \cos{\left( \omega t \right)} + \left( \sum_{i = 0}^n M_i t^i \right) \sin{\left( \omega t \right)} \right]\) \\
+        \bottomrule
+    \end{tabular}
+    \caption{Choice of particular solution based on the form of the nonhomogeneous term where
+        \(n \in \N_{\geq 0}\), \(r,\: \omega \in \R_{>0}\), and \(A,\: C,\: K,\: M \in \R\).
+        Any constant coefficients in \(f\) are to be ignored.} % \label{}
+\end{table}
+In the above table, \(P_n\left( t \right)\) is any polynomial function of order \(n\),
+\(T\left( t \right)\) is used to denote any of the following trigonometric functions:
+\begin{equation*}
+    T\left( t \right) =
+    \begin{cases}
+        \cos{\left( t \right)} \\
+        \sin{\left( t \right)} \\
+        \cos{\left( t \right)} \pm \sin{\left( t \right)}
+    \end{cases}
+\end{equation*}
+For more complex forms of \(f\) as shown in the last three rows of the table above, we can use the following facts:
+\begin{itemize}
+    \item If \(f\) can be expressed as the linear combination of two forms \(f_1\) and \(f_2\), then the particular solution
+          is also a linear combination of the particular solutions associated with \(f_1\) and \(f_2\).
+    \item If \(f\) can be expressed as a product of two forms \(f_1\) and \(f_2\), then the particular solution will also be
+          the product of the particular solutions associated with \(f_1\) and \(f_2\).
+          In this situation, it is important to always simplify all arbitrary constants as shown in the table above.
+\end{itemize}
+In general, it is sufficient to only memorise the first three rows of the table above.
+\subsubsection{Undetermined Coefficients}
+Equipped with a particular solution \(y_p\), we can substitute it into the LHS of the nonhomogeneous ODE
+to obtain:
+\begin{equation*}
+    a_n y_p^{\left( n \right)} + \cdots + a_2 y_p'' + a_1 y_p' + a_0 y_p = f\left( t \right).
+\end{equation*}
+We then simplify the LHS and factor out any terms that are terms that depend on \(t\).
+For example:
+\begin{equation*}
+    \left( \dots \right) f_1 + \left( \dots \right) f_2 + \cdots + \left( \dots \right) f_3 f_4 + \cdots = f.
+\end{equation*}
+The purpose of doing so is to construct a system of equations that allows us to solve for the undetermined coefficients in \(y_p\).
+\subsubsection{The Resonance Case}
+In some problems, the forcing term \(f\left( t \right)\) may have a form similar to
+\(y_h\) leading to a linearly dependent solution \(y_p\). In this case, we can use the \emph{Reduction of Order} method, as we did for
+repeated roots, and multiply \(y_p\) by \(t\) until it is linearly independent to \(y_h\).
+\subsection{Initial Value Problems}
+Real-world systems modelled using differential equations are accompanied by initial conditions
+that allow us to eliminate any remaining constants in our general solution \emph{after}
+we have found \textbf{both} the homogeneous and particular solutions (where applicable).
+
+For an \(n\)th order ODE, we require \(n\) initial conditions \(y_0\), corresponding to the first \(n\) derivatives of \(y\):
+\begin{align*}
+    y\left( t_0 \right)                      & = y_0                      \\
+    y'\left( t_0 \right)                     & = y_0'                     \\
+                                             & \vdotswithin{=}            \\
+    y^{\left( n-1 \right)}\left( t_0 \right) & = y_0^{\left( n-1 \right)}
+\end{align*}
+note that \(y_0\) is a constant and we are using the dash (\('\)) for notational convenience.
+\section{Nonconstant Coefficient ODEs}
+A nonconstant coefficient ODE (or a linear ODE) has the following form:
+\begin{equation*}
+    a_n\left( t \right) y^{\left( n \right)} + \cdots + a_2\left( t \right) y'' + a_1\left( t \right) y' + a_0\left( t \right) y = f\left( t \right).
+\end{equation*}
+where \(a_i\) depends on the independent variable.
+
+In the previous section, we found that the method of Undetermined Coefficients was insufficient for ODEs with more complex
+forcing functions. As we will see soon, we can construct a different particular solution where our guess depends on the
+homogeneous solutions.
+\subsection{Variation of Parameters}
+Given a set of homogeneous solutions \(y_1\), \(y_2\), \dots, and \(y_n\) to the above linear ODE,
+consider a particular solution of the form
+\begin{equation*}
+    y_p = v_1\left( t \right) y_1 + v_2\left( t \right) y_2 + \cdots + v_n\left( t \right) y_n
+\end{equation*}
+where \(v_i\) are now functions of the independent variable.
+
+As before, we want to substitute this function into the linear ODE above, which requires us
+to compute the derivatives of \(y_p\). Because \(y_p\) has several products, we will impose
+additional constraints such that we eliminate any derivatives of \(v\) in our calculations (except for in the final derivative)\footnote{See the appendix for an example using a second-order linear ODE.}.
+
+This will give:
+\begin{align*}
+    y_p^{\left( k \right)} & = v_1 y_1^{\left( k \right)} + v_2 y_2^{\left( k \right)} + \cdots + v_n y_n^{\left( k \right)}                                                                                                          &  & k = 0,\: 1,\: \dots,\: n - 1 \\
+    y_p^{\left( n \right)} & = v_1 y_1^{\left( n \right)} + v_2 y_2^{\left( n \right)} + \cdots + v_n y_n^{\left( n \right)} + v_1' y_1^{\left( n-1 \right)} + v_2' y_2^{\left( n-1 \right)} + \cdots + v_n' y_n^{\left( n-1 \right)}
+\end{align*}
+where we make the following constraints:
+\begin{align*}
+    0 & = v_1' y_1^{\left( k \right)} + v_2' y_2^{\left( k \right)} + \cdots + v_n' y_n^{\left( k \right)} &  & k = 0,\: 1,\: \dots,\: n - 2.
+\end{align*}
+Explicitly this looks like the following:
+\begin{align*}
+    \begin{cases}
+        y_p                        = v_1 y_1 + v_2 y_2 + \cdots + v_n y_n                                                                      \\
+        y_p'                       = v_1 y_1' + v_2 y_2' + \cdots + v_n y_n'                                                                   \\
+        \vdots                                                                                                                                 \\
+        y_p^{\left( n - 1 \right)} = v_1 y_1^{\left( n - 1 \right)} + v_2 y_2^{\left( n - 1 \right)} + \cdots + v_n y_n^{\left( n - 1 \right)} \\
+        y_p^{\left( n \right)} = v_1 y_1^{\left( n \right)} + v_2 y_2^{\left( n \right)} + \cdots + v_n y_n^{\left( n \right)} + v_1' y_1^{\left( n-1 \right)} + v_2' y_2^{\left( n-1 \right)} + \cdots + v_n' y_n^{\left( n-1 \right)}
+    \end{cases}
+\end{align*}
+with the constraints:
+\begin{equation*}
+    \begin{cases}
+        0 = v_1' y_1 + v_2' y_2 + \cdots + v_n' y_n    \\
+        0 = v_1' y_1' + v_2' y_2' + \cdots + v_n' y_n' \\
+        \vdots                                         \\
+        0 = v_1' y_1^{\left( n-2 \right)} + v_2' y_2^{\left( n-2 \right)} + \cdots + v_n' y_n^{\left( n-2 \right)}
+    \end{cases}
+\end{equation*}
+We can now substitute \(y_p\) into the ODE to find
+\begin{align*}
+    a_n y_p^{\left( n \right)} + a_{n-1} y_p^{\left( n-1 \right)} + \cdots + a_1 y_p' + a_0 y_p                                     & = f\left( t \right) \\[2ex]
+    \begin{aligned}[b]
+        a_0 \left[ v_1 y_1 + v_2 y_2 + \cdots + v_n y_n \right] +                                                          & \\
+        a_1 \left[ v_1 y_1' + v_2 y_2' + \cdots + v_n y_n' \right] +                                                       & \\
+        \mathmakebox[\widthof{\(+\)}]{\vdots}                                                                              & \\
+        a_n \left[ v_1 y_1^{\left( n \right)} + v_2 y_2^{\left( n \right)} + \cdots + v_n y_n^{\left( n \right)} \right] + & \\
+        a_n \left[ v_1' y_1^{\left( n-1 \right)} + v_2' y_2^{\left( n-1 \right)} + \cdots + v_n' y_n^{\left( n-1 \right)} \right]
+    \end{aligned} & = f\left( t \right)                          \\[2ex]
+    \begin{aligned}[b]
+        v_1 \left[ a_n y_1^{\left( n \right)} + a_{n-1} y_1^{\left( n - 1 \right)} + \cdots + a_1 y_1' + a_0 y_1 \right] + & \\
+        v_2 \left[ a_n y_2^{\left( n \right)} + a_{n-1} y_2^{\left( n - 1 \right)} + \cdots + a_1 y_2' + a_0 y_2 \right] + & \\
+        \mathmakebox[\widthof{\(+\)}]{\vdots}                                                                              & \\
+        v_n \left[ a_n y_n^{\left( n \right)} + a_{n-1} y_n^{\left( n - 1 \right)} + \cdots + a_1 y_n' + a_0 y_n \right] + & \\
+        a_n \left[ v_1' y_1^{\left( n-1 \right)} + v_2' y_2^{\left( n-1 \right)} + \cdots + v_n' y_n^{\left( n-1 \right)} \right]
+    \end{aligned} & = f\left( t \right)
+\end{align*}
+This simplifies greatly and results in:
+\begin{equation*}
+    v_1' y_1^{\left( n-1 \right)} + v_2' y_2^{\left( n-1 \right)} + \cdots + v_n' y_n^{\left( n-1 \right)} = g\left( t \right)
+\end{equation*}
+where \(g\left( t \right) = f\left( t \right) / a_n\). Using the constraints stated previously, we reach the following
+system of equations:
+\begin{equation*}
+    \begin{bmatrix}
+        y_1                      & y_2                      & \cdots & y_n                      \\
+        y_1'                     & y_2'                     & \cdots & y_n'                     \\
+        \vdots                   & \vdots                   & \vdots & \vdots                   \\
+        y_1^{\left( n-2 \right)} & y_2^{\left( n-2 \right)} & \cdots & y_n^{\left( n-2 \right)} \\
+        y_1^{\left( n-1 \right)} & y_2^{\left( n-1 \right)} & \cdots & y_n^{\left( n-1 \right)}
+    \end{bmatrix}
+    \begin{bmatrix}
+        v_1'     \\
+        v_2'     \\
+        \vdots   \\
+        v_n'
+    \end{bmatrix}
+    =
+    \begin{bmatrix}
+        0      \\
+        0      \\
+        \vdots \\
+        0      \\
+        g\left( t \right)
+    \end{bmatrix}.
+\end{equation*}
+Using Cramer's rule, we find that the solution to this system is given by
+\begin{equation*}
+    v_i' = \frac{W_i}{W}
+\end{equation*}
+where \(W\) is the Wronskian, and \(W_i\) is the determinant of the Wronskian matrix where the \(i\)th column is replaced with the RHS vector \(\symbfit{b}\).
+Integration shows that the particular solution is given by:
+\begin{equation*}
+    y_p = y_1 \int \frac{W_1}{W} \odif{t} + y_2 \int \frac{W_2}{W} \odif{t} + \cdots + y_n \int \frac{W_n}{W} \odif{t}.
+\end{equation*}
+Therefore the general solution of a linear ODE has the form:
+\begin{equation*}
+    y = y_1 + y_2 + \cdots + y_n + y_1 \int \frac{W_1}{W} \odif{t} + y_2 \int \frac{W_2}{W} \odif{t} + \cdots + y_n \int \frac{W_n}{W} \odif{t}
+\end{equation*}
+where \(y_1\) through \(y_n\) are fundamental solutions to the homogeneous ODE.
+As we made no assumptions about the coefficients in this ODE, Variation of Parameters can be used to solve both constant coefficient and nonconstant coefficient ODEs.
+It should be noted that the final integration may not have a closed-form solution.
+\newpage
+\begin{appendix}
+    \section{Second-Order Variation of Parameters}
+    Consider the following second-order linear ODE
+    \begin{equation*}
+        a_2\left( t \right) y'' + a_1\left( t \right) y' + a_0\left( t \right) y = f\left( t \right).
+    \end{equation*}
+    The particular solution is given by
+    \begin{equation*}
+        y_p = v_1 \left( t \right) y_1 + v_2\left( t \right) y_2
+    \end{equation*}
+    where \(y_1\) and \(y_2\) are solutions to the homogeneous problem.
+    Differentiating \(y_p\) once gives us
+    \begin{align*}
+        y_p' = v_1' y_1 + v_1 y_1' + v_2' y_2 + v_2 y_2'
+    \end{align*}
+    where we will use the assumption
+    \begin{equation*}
+        v_1' y_1 + v_2' y_2 = 0
+    \end{equation*}
+    to arrive at
+    \begin{equation*}
+        y_p' = v_1 y_1' + v_2 y_2'.
+    \end{equation*}
+    The second derivative is then
+    \begin{equation*}
+        y_p'' = v_1' y_1' + v_1 y_1'' + v_2' y_2' + v_2 y_2''.
+    \end{equation*}
+    If we then substitute these values into our ODE, and factor in terms of \(v\), we find
+    \begin{align*}
+        a_2 y_p'' + a_1 y_p' + a_0 y_p                                                                                                                   & = f\left( t \right) \\
+        a_2 \left[ v_1' y_1' + v_1 y_1'' + v_2' y_2' + v_2 y_2'' \right] + a_1 \left[ v_1 y_1' + v_2 y_2' \right] + a_0 \left[ v_1 y_1 + v_2 y_2 \right] & = f\left( t \right) \\
+        v_1 \left[ a_2 y_1'' + a_1 y_1' + a_0 y_1 \right] + v_2 \left[ a_2 y_2'' + a_1 y_2' + a_0 y_2 \right] + a_2 v_1' y_1' + a_2 v_2' y_2'            & = f\left( t \right) \\
+        a_2 v_1' y_1' + a_2 v_2' y_2'                                                                                                                    & = f\left( t \right) \\
+        v_1' y_1' + v_2' y_2'                                                                                                                            & = g\left( t \right)
+    \end{align*}
+    where \(g\left( t \right) = f\left( t \right) / a_2\left( t \right)\).
+    This gives us a system of equations where we can solve for \(v_1'\) and \(v_2'\),
+    using the assumption from earlier:
+    \begin{equation*}
+        \begin{bmatrix}
+            y_1  & y_2  \\
+            y_1' & y_2'
+        \end{bmatrix}
+        \begin{bmatrix}
+            v_1' \\
+            v_2'
+        \end{bmatrix}
+        =
+        \begin{bmatrix}
+            0 \\
+            g\left( t \right)
+        \end{bmatrix}.
+    \end{equation*}
+    where the coefficient matrix is simply the Wronskian matrix \(\symbf{W}\).
+    Using Cramer's rule, we can conclude that
+    \begin{equation*}
+        v_1' = \frac{W_1}{W} \qquad \text{and} \qquad v_2' = \frac{W_2}{W}
+    \end{equation*}
+    where \(W_i\) are the determinants of the Wronskian with the \(i\)th columns replaced with the RHS vector \(\symbfit{b}\):
+    \begin{equation*}
+        W_1 = \begin{vmatrix}
+            0                 & y_2  \\
+            g\left( t \right) & y_2'
+        \end{vmatrix}
+        \qquad \text{and} \qquad
+        W_2 = \begin{vmatrix}
+            y_1  & 0                 \\
+            y_1' & g\left( t \right)
+        \end{vmatrix}
+    \end{equation*}
+    Integrating these results gives
+    \begin{equation*}
+        v_1 = \int \frac{W_1}{W} \odif{t} \qquad \text{and} \qquad v_2 = \int \frac{W_2}{W} \odif{t}
+    \end{equation*}
+    so that the particular solution is given by
+    \begin{equation*}
+        y_p = y_1 \int \frac{W_1}{W} \odif{t} + y_2 \int \frac{W_2}{W} \odif{t}.
+    \end{equation*}
+    Note that it may not be possible to compute these integrals.
+\end{appendix}
 \end{document}
