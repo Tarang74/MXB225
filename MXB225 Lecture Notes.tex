@@ -450,8 +450,7 @@ A nonconstant coefficient ODE (or a linear ODE) has the following form:
     a_n\left( t \right) y^{\left( n \right)} + \cdots + a_2\left( t \right) y'' + a_1\left( t \right) y' + a_0\left( t \right) y = f\left( t \right).
 \end{equation*}
 where \(a_i\) depends on the independent variable.
-
-In the previous section, we found that the method of Undetermined Coefficients was insufficient for ODEs with more complex
+In the previous section, we found that the method of \emph{Undetermined Coefficients} was insufficient for ODEs with more complex
 forcing functions. As we will see soon, we can construct a different particular solution where our guess depends on the
 homogeneous solutions.
 \subsection{Variation of Parameters}
@@ -546,17 +545,116 @@ Using Cramer's rule, we find that the solution to this system is given by
     v_i' = \frac{W_i}{W}
 \end{equation*}
 where \(W\) is the Wronskian, and \(W_i\) is the determinant of the Wronskian matrix where the \(i\)th column is replaced with the RHS vector \(\symbfit{b}\).
-Integration shows that the particular solution is given by:
+Integration\footnote{Due to the rational form of the integrand, a closed-form solution may not exist.} yields:
 \begin{equation*}
     y_p = y_1 \int \frac{W_1}{W} \odif{t} + y_2 \int \frac{W_2}{W} \odif{t} + \cdots + y_n \int \frac{W_n}{W} \odif{t}.
 \end{equation*}
-Therefore the general solution of a linear ODE has the form:
+In this section, we built our particular solution from solutions to the homogeneous ODE; let us now discuss two methods to determine the homogeneous solution
+for linear ODEs.
+\section{Power Series Solutions}
+Consider the following linear ODE:
 \begin{equation*}
-    y = y_1 + y_2 + \cdots + y_n + y_1 \int \frac{W_1}{W} \odif{t} + y_2 \int \frac{W_2}{W} \odif{t} + \cdots + y_n \int \frac{W_n}{W} \odif{t}
+    y'' + P\left( t \right) y' + Q\left( t \right) y = f\left( t \right).
 \end{equation*}
-where \(y_1\) through \(y_n\) are fundamental solutions to the homogeneous ODE.
-As we made no assumptions about the coefficients in this ODE, Variation of Parameters can be used to solve both constant coefficient and nonconstant coefficient ODEs.
-It should be noted that the final integration may not have a closed-form solution.
+let us consider a power series solution of the form
+\begin{equation*}
+    y = \sum_{n = 0}^\infty c_n t^n.
+\end{equation*}
+This allows us to form the following derivatives:
+\begin{equation*}
+    y' = \sum_{n = 1}^\infty c_n n t^{n - 1}, \qquad y'' = \sum_{n = 2}^\infty c_n n \left( n - 1 \right) t^{n - 2} \qquad \dots
+\end{equation*}
+As with constant coefficient ODEs, we can determine \(c_n\) through substitution:
+\begin{equation*}
+    \sum_{n = 2}^\infty c_n n \left( n - 1 \right) t^{n - 2} + P\left( t \right) \sum_{n = 1}^\infty c_n n t^{n - 1} + Q\left( t \right) \sum_{n = 0}^\infty c_n t^n = f\left( t \right).
+\end{equation*}
+Here we must use the following steps to simplify this equation:
+\begin{enumerate}
+    \item Shift the index \(n\) of any summation so that the exponent of \(t\) is the same in each summation.
+    \item Extract lower order terms from summations so that all summations start from the same index.
+    \item Factor all summations together.
+\end{enumerate}
+This results in an equation of the form:
+\begin{equation*}
+    \mathrm{RR}_0 t^p + \sum_{n = n_0}^\infty \mathrm{RR} t^{n + q} = f\left( t \right).
+\end{equation*}
+where \(p\) and \(q\) are some integer value, and \(\mathrm{RR}\) and \(\mathrm{RR}_0\) depend on \(n\) and \(c_n\).
+
+We can solve this expression by equating linearly dependent terms w.r.t.\ \(t\). As \(f\left( t \right)\)
+is not guaranteed to have a simple Taylor series expansion, we will typically consider the homogeneous problem first.
+
+This forces all coefficients of \(t\) to be equal to 0, and hence allows us to form a
+\textbf{recurrence relationship} using \(\mathrm{RR} = 0\).
+This relationship will be of the form:
+\begin{equation*}
+    c_{n + u} = v\left( n \right) c_n
+\end{equation*}
+where higher order terms depend on lower order terms (\(u > 0\) and \(v\) may depend on \(n\)). By substituting \(n = n_0,\: n_0 + 1,\: n_0 + 2,\: \ldots\), we
+can substitute these coefficients back into the original power series, and, if possible, find an explicit form of the
+coefficients \(c_n\).
+\subsection{Classification of Points}
+Values of \(t \in \C\) can be classified into \textbf{ordinary points}, at which the ODE's coefficients are analytic,
+and \textbf{singular points} at which some coefficient has a singularity (i.e., division by 0).
+
+A singular point \(t = t_0\) is a \textbf{regular singular point} if
+\begin{equation*}
+    \left( t - t_0 \right) P\left( t \right) \qquad \text{and} \qquad \left( t - t_0 \right)^2 Q\left( t \right)
+\end{equation*}
+are analytic at \(t_0\).
+A singular point that is not regular is called an \textbf{irregular singular point}.
+\subsection{Frobenius Method}
+When \(t = t_0\) forms a regular singular point, there exists at least one
+series solution of the form
+\begin{equation*}
+    y = \sum_{n = 0}^\infty c_n \left( t - t_0 \right)^{n + r}.
+\end{equation*}
+where \(r\) is some real number to be determined.
+This gives us the following derivatives:
+\begin{equation*}
+    y' = \sum_{n = 0}^\infty c_n \left( n + r \right) t^{n + r - 1}, \qquad y' = \sum_{n = 0}^\infty c_n \left( n + r \right) \left( n + r - 1 \right) t^{n + r - 2} \qquad \dots
+\end{equation*}
+Using a similar approach, we can substitute these expressions into our ODE to find a second relationship
+between the roots \(r\), this is known as the \textbf{indicial equation}.
+\begin{equation*}
+    \mathrm{IE} t^{r + p} + \sum_{n = n_0}^\infty \mathrm{RR} t^{n + r + q} = f\left( t \right).
+\end{equation*}
+where again, \(p\) and \(q\) are some integers, and \(\mathrm{IE}\) and \(\mathrm{RR}\) depend on \(n\), \(r\), and \(c_n\).
+\subsubsection{Cases of Indicial Roots}
+In the event that the indicial equation yields several \textbf{indicial roots}, we must take the following into account.
+Given real roots \(r_1\) and \(r_2\) with \(r_1 > r_2\):
+\begin{enumerate}
+    \item When \(r_1 - r_2 \notin \N\):
+    \begin{align*}
+        y_1\left( t \right) & = \sum_{n = 0}^\infty c_n t^{n + r_1} \\
+        y_2\left( t \right) & = \sum_{n = 0}^\infty b_n t^{n + r_2}
+    \end{align*}
+    with \(c_0 \neq 0\) and \(b_0 \neq 0\).
+    \item When \(r_1 - r_2 \in \N\):
+    \begin{align*}
+        y_1\left( t \right) & = \sum_{n = 0}^\infty c_n t^{n + r_1} \\
+        y_2\left( t \right) & = c y_1\left( t \right) \ln\left( x \right) + \sum_{n = 0}^\infty b_n t^{n + r_2}
+    \end{align*}
+    with \(c_0 \neq 0\) and \(b_0 \neq 0\), where \(c\) may be 0.
+    \item When \(r_1 = r_2\):
+    \begin{align*}
+        y_1\left( t \right) & = \sum_{n = 0}^\infty c_n t^{n + r_1} \\
+        y_2\left( t \right) & = y_1\left( t \right) \ln\left( x \right) + \sum_{n = 1}^\infty b_n t^{n + r_2}
+    \end{align*}
+    with \(c_0 \neq 0\).
+\end{enumerate}
+When roots differ by an integer, notice that solutions may be linearly dependent. In this case, we can
+strategically choose roots that allow us to form a complete set of solutions.
+For instance, in the following indicial equation,
+\begin{equation*}
+    c_0 r \left( r + 1 \right) t^{r - 1} + a_1 \left( r + 1 \right) \left( r + 2 \right) t^r = 0
+\end{equation*}
+we can choose:
+\begin{itemize}
+    \item \(r = -1\), where \(c_0\) and \(c_1\) are arbitrary,
+    \item \(r = 0\), where \(c_1 = 0\) but \(c_0\) is arbitrary,
+    \item \(r = -2\), where \(c_0 = 0\) but \(c_1\) is arbitrary.
+\end{itemize}
+By choosing \(r = -1\), we mitigate the risk of reducing higher order terms that may depend on \(c_0\) or \(c_1\) to 0.
 \newpage
 \begin{appendix}
     \section{Second-Order Variation of Parameters}
