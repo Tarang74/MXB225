@@ -526,9 +526,9 @@ system of equations:
         y_1^{\left( n-1 \right)} & y_2^{\left( n-1 \right)} & \cdots & y_n^{\left( n-1 \right)}
     \end{bmatrix}
     \begin{bmatrix}
-        v_1'     \\
-        v_2'     \\
-        \vdots   \\
+        v_1'   \\
+        v_2'   \\
+        \vdots \\
         v_n'
     \end{bmatrix}
     =
@@ -624,23 +624,23 @@ In the event that the indicial equation yields several \textbf{indicial roots}, 
 Given real roots \(r_1\) and \(r_2\) with \(r_1 > r_2\):
 \begin{enumerate}
     \item When \(r_1 - r_2 \notin \N\):
-    \begin{align*}
-        y_1\left( t \right) & = \sum_{n = 0}^\infty c_n t^{n + r_1} \\
-        y_2\left( t \right) & = \sum_{n = 0}^\infty b_n t^{n + r_2}
-    \end{align*}
-    with \(c_0 \neq 0\) and \(b_0 \neq 0\).
+          \begin{align*}
+              y_1\left( t \right) & = \sum_{n = 0}^\infty c_n t^{n + r_1} \\
+              y_2\left( t \right) & = \sum_{n = 0}^\infty b_n t^{n + r_2}
+          \end{align*}
+          with \(c_0 \neq 0\) and \(b_0 \neq 0\).
     \item When \(r_1 - r_2 \in \N\):
-    \begin{align*}
-        y_1\left( t \right) & = \sum_{n = 0}^\infty c_n t^{n + r_1} \\
-        y_2\left( t \right) & = c y_1\left( t \right) \ln\left( t \right) + \sum_{n = 0}^\infty b_n t^{n + r_2}
-    \end{align*}
-    with \(c_0 \neq 0\) and \(b_0 \neq 0\), where \(c\) may be 0.
+          \begin{align*}
+              y_1\left( t \right) & = \sum_{n = 0}^\infty c_n t^{n + r_1}                                             \\
+              y_2\left( t \right) & = c y_1\left( t \right) \ln\left( t \right) + \sum_{n = 0}^\infty b_n t^{n + r_2}
+          \end{align*}
+          with \(c_0 \neq 0\) and \(b_0 \neq 0\), where \(c\) may be 0.
     \item When \(r_1 = r_2\):
-    \begin{align*}
-        y_1\left( t \right) & = \sum_{n = 0}^\infty c_n t^{n + r_1} \\
-        y_2\left( t \right) & = y_1\left( t \right) \ln\left( t \right) + \sum_{n = 1}^\infty b_n t^{n + r_2}
-    \end{align*}
-    with \(c_0 \neq 0\).
+          \begin{align*}
+              y_1\left( t \right) & = \sum_{n = 0}^\infty c_n t^{n + r_1}                                           \\
+              y_2\left( t \right) & = y_1\left( t \right) \ln\left( t \right) + \sum_{n = 1}^\infty b_n t^{n + r_2}
+          \end{align*}
+          with \(c_0 \neq 0\).
 \end{enumerate}
 When roots differ by an integer, notice that solutions may be linearly dependent. In this case, we can
 strategically choose roots that allow us to form a complete set of solutions.
@@ -655,6 +655,114 @@ we can choose:
     \item \(r = -2\), where \(c_0 = 0\) but \(c_1\) is arbitrary.
 \end{itemize}
 By choosing \(r = -1\), we mitigate the risk of reducing higher order terms that may depend on \(c_0\) or \(c_1\) to 0.
+\newpage
+\section{Laplace Transforms}
+The Laplace transfrom is a type of integral transform that maps
+a time-dependent problem in \(t\) to the complex \(s\)-domain, it is defined:
+\begin{equation*}
+    F\left( s \right) = \mathscr{L}\left\{ f\left( t \right) \right\} = \int_0^\infty f\left( t \right) e^{-st} \odif{t}.
+\end{equation*}
+In the context of ODEs, this transformation allows us to take difficult nonlinear problems and solve them
+using the inverse Laplace transformation.
+\subsection{Partial Fraction Decomposition}
+In this unit, we will use tables to find the inverse Laplace transform, rather than using the
+explicit definition. To do so, we must make use of partial fraction decomposition (PFD).
+
+Given the fraction
+\begin{equation*}
+    \frac{P\left( x \right)}{Q\left( x \right)}
+\end{equation*}
+where \(P\) and \(Q\) are polynomials in \(x\) and the degree of \(P\) is less than the degree of \(Q\),
+we can decompose a fraction by considering the following cases:
+
+Assume \(Q\) is fully factored.
+\begin{description}
+    \item[Case I:] \(Q\) has distinct polynomial factors:
+        \begin{equation*}
+            Q\left( x \right) = q_1\left( x \right) q_2\left( x \right) \cdots q_k\left( x \right)
+        \end{equation*}
+        then,
+        \begin{equation*}
+            \frac{P\left( x \right)}{Q\left( x \right)} = \frac{A_1\left( x \right)}{q_1\left( x \right)} + \frac{A_2\left( x \right)}{q_2\left( x \right)} + \cdots + \frac{A_k\left( x \right)}{q_k\left( x \right)}.
+        \end{equation*}
+        where \(A_i\) has the form:
+        \begin{equation*}
+            A_i\left( x \right) = a_{i,n-1} x^{n - 1} + a_{i,n-2} x^{n - 2} + \cdots + a_{i,1} x + a_{i,0}
+        \end{equation*}
+        where the order of \(A_i\) will be one less than the order of the denominator \(q_i\).
+    \item[Case II:] \(Q\) has repeated polynomial factors:
+        \begin{equation*}
+            Q\left( x \right) = q\left( x \right)^r
+        \end{equation*}
+        then,
+        \begin{equation*}
+            \frac{P\left( x \right)}{Q\left( x \right)} = \frac{A_1\left( x \right)}{q\left( x \right)} + \frac{A_2\left( x \right)}{q\left( x \right)^2} + \cdots + \frac{A_r\left( x \right)}{q\left( x \right)^r}.
+        \end{equation*}
+        where the denominator will have increasing powers of \(q\).
+    \item[Case III:] \(Q\) has both distinct and repeated polynomial factors,\\
+        the fraction will contain a combination of the above two cases.
+\end{description}
+\subsection{Heaviside Step Function}
+The (Heaviside) step function (also unit step function) is defined:
+\begin{equation*}
+    u\left( t \right) = \begin{cases}
+        0 & t < 0    \\
+        1 & 0 \leq t
+    \end{cases}
+\end{equation*}
+along with the shifted step function:
+\begin{equation*}
+    u_c\left( t \right) = u\left( t - c \right) = \begin{cases}
+        0 & t < c     \\
+        1 & t \geq c.
+    \end{cases}
+\end{equation*}
+These special functions allow us to express piecewise functions more compactly. For example,
+\begin{equation*}
+    f\left( t \right) = \begin{cases}
+        f_1\left( t \right) & 0 \leq t < a \\
+        f_2\left( t \right) & t \geq a
+    \end{cases}
+\end{equation*}
+can be expressed as
+\begin{align*}
+    f\left( t \right) & = f_1\left( t \right) u\left( t - 0 \right) \underbrace{- f_1\left( t \right) u\left( t - a \right)}_{\text{turn \(f_1\) off after \(t = a\)}} + f_2\left( t \right) u\left( t - a \right) \\
+                      & = f_1\left( t \right) \left[ u\left( t \right) - u\left( t - a \right) \right] + f_2\left( t \right) u\left( t - a \right).
+\end{align*}
+Additionally,
+\begin{equation*}
+    f\left( t \right) = \begin{cases}
+        0                   & 0 \leq t < a \\
+        f_p\left( t \right) & a \leq t < b \\
+        0                   & t \geq b
+    \end{cases}
+\end{equation*}
+can be expressed as
+\begin{align*}
+    f\left( t \right) & = f_p\left( t \right) u\left( t - a \right) - f_p\left( t \right) u\left( t - b \right) \\
+                      & = f_p\left( t \right) \left[ u\left( t - a \right) - u\left( t - b \right) \right]
+\end{align*}
+To summarise
+\begin{equation*}
+    f_1\left( t \right) \left[ u\left( t \right) - u\left( t - a \right) \right] + f_2\left( t \right) u\left( t - a \right)
+    \equiv
+    \begin{cases}
+        f_1\left( t \right) & 0 \leq t < a \\
+        f_2\left( t \right) & t \geq a
+    \end{cases}
+\end{equation*}
+and
+\begin{equation*}
+    f\left( t \right) \left[ u\left( t - a \right) - u\left( t - b \right) \right]
+    \equiv
+    \begin{cases}
+        0                 & 0 \leq t < a \\
+        f\left( t \right) & a \leq t < b \\
+        0                 & t \geq b
+    \end{cases}
+\end{equation*}
+\subsection{Properties of Laplace Transforms}
+
 \newpage
 \begin{appendix}
     \section{Second-Order Variation of Parameters}
