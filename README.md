@@ -26,7 +26,8 @@ This repository provides **lecture notes** and **exam notes** for **MXB225 - Mod
 2. Constant Coefficient ODEs
 3. Nonconstant Coefficient ODEs
 4. Power Series Solutions
-5. Second-Order Variation of Parameters
+5. Laplace Transforms
+6. Second-Order Variation of Parameters
 
 ---
 
