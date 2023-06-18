@@ -783,6 +783,7 @@ The characteristic polynomial is
     \lambda^2 - \tau \lambda + \Delta = 0
 \]
 where \(\tau = \Tr(A)\) and \(\Delta=|A|\).
+\(\mathbf{K}_i\) is the eigenvector corresponding to \(\lambda_i\).
 \begin{table}[h]
     \small
     \centering\begin{tabular}{c c c c}\toprule
@@ -812,10 +813,28 @@ where \(\tau = \Tr(A)\) and \(\Delta=|A|\).
 & Unstable spiral node & \\\bottomrule
     \end{tabular}
 \end{table}
+\subsection{Linearisation of nonlinear systems}
+For the nonlinear system \(\odv{x}{t}=F(x,y),\;\odv{y}{t}=G(x,y)\),
+there exists equilibrium or critical points where
+\(F(x,y)=G(x,y)=0\).
+If the system has a critical point at \(\left( x_e, y_e \right)\),
+we can derive an approximate linear system around that point.
+\begin{align*}
+    \dot{\mathbf{H}} &= \left.\mathbf{J}\right|_{\left( x_e, y_e \right)}\mathbf{H} \\
+    \begin{pmatrix} x-x_e \\ y-y_e \end{pmatrix}' &=
+    \left.\begin{pmatrix}
+        \pdv{F}{x} & \pdv{F}{y} \\
+        \pdv{G}{x} & \pdv{G}{y} \\
+    \end{pmatrix}\right|_{\left( x_e, y_e \right)}
+    \begin{pmatrix} x-x_e \\ y-y_e \end{pmatrix} 
+\end{align*}
+
+An alternate approach is to use the chain rule directly,
+\(\frac{\odv{x}{t}}{\odv{y}{t}}=\odv{x}{y}=\frac{F(x,y)}{G(x,y)}\).
 \subsection{Nullclines}
-For a linear system of differential equations \(\mathbf{X}=\begin{bmatrix}
+For a linear system of differential equations \(\mathbf{X}=\begin{pmatrix}
     x \\ y
-\end{bmatrix}'\),
+\end{pmatrix}'\),
 the curve along which \(x'=0\) is called the \(x\)-nullcline,
 and the curve along which \(y'=0\) is called the \(y\)-nullcline.
 The points where these nullclines intersect are steady states.
