@@ -4,6 +4,7 @@
 \input{LaTeX-Submodule/template.tex}
 
 % Additional packages & macros
+\usepackage{multirow}
 
 % Header and footer
 \newcommand{\unitName}{Modelling with Differential Equations 1}
@@ -370,7 +371,7 @@ requires us to guess a solution \(y_p\) based on the form of \(f\left( t \right)
 \subsubsection{Choosing a Particular Solution}
 Consider the vector space of particularly nice functions \(W\) with the basis:
 \begin{equation*}
-    \vbasis{\left( W \right)} = \left\{ 1,\: t^n,\: e^{r t},\: e^{-r t},\: \sin{\left( r t \right)}, \cos{\left( r t \right)} \right\}
+    % \vbasis{\left( W \right)} = \left\{ 1,\: t^n,\: e^{r t},\: e^{-r t},\: \sin{\left( r t \right)}, \cos{\left( r t \right)} \right\}
 \end{equation*}
 for all \(n \in \N_{>0}\) and \(r \in \R_{>0}\).
 
@@ -655,6 +656,7 @@ we can choose:
     \item \(r = -2\), where \(c_0 = 0\) but \(c_1\) is arbitrary.
 \end{itemize}
 By choosing \(r = -1\), we mitigate the risk of reducing higher order terms that may depend on \(c_0\) or \(c_1\) to 0.
+
 \newpage
 \section{Laplace Transforms}
 The Laplace transfrom is a type of integral transform that maps
@@ -762,6 +764,80 @@ and
     \end{cases}
 \end{equation*}
 \subsection{Properties of Laplace Transforms}
+
+\newpage
+\section{Linear Systems}
+For a linear system
+\[
+    \mathbf{X}'=A\mathbf{X}
+\]
+solutions are superpositions of the form
+\[
+    \mathbf{X}(t)=\mathbf{K}e^{\lambda t}
+\]
+We can find such \(\lambda\) by solving
+\(\left|A-\lambda I\right|\) and substitute to find the corresponding \(K\) vectors.
+\subsection{Stability}
+The characteristic polynomial is
+\[
+    \lambda^2 - \tau \lambda + \Delta = 0
+\]
+where \(\tau = \Tr(A)\) and \(\Delta=|A|\).
+\(\mathbf{K}_i\) is the eigenvector corresponding to \(\lambda_i\).
+\begin{table}[h]
+    \small
+    \centering\begin{tabular}{c c c c}\toprule
+\multicolumn{2}{c}{Condition} & Behaviour & Solution \\\midrule
+\(\tau^2 - 4\Delta > 0\) & \(\tau < 0, \Delta > 0\)
+& Stable node & \multirow{3}{*}{\(\mathbf{X}(t)=c_1\mathbf{K}_1e^{\lambda_1 t}+c_2\mathbf{K}_2e^{\lambda_2 t}\)}\\
+                                          & \(\tau > 0, \Delta > 0\)
+& Unstable node & \\
+                                          & \(\Delta < 0\)
+& Saddle point & \\\midrule
+\(\tau^2 = 4\Delta\)     & \(\mathbf{K}_1\ne a\mathbf{K}_2\), \(\lambda_1 > 0\)
+& Degenerate stable node & \multirow{2}{*}{\(\mathbf{X}(t)=c_1\mathbf{K}_1e^{\lambda_1 t}+c_2\mathbf{K}_2e^{\lambda_1 t}\)}\\
+                                          & \(\mathbf{K}_1 \ne a\mathbf{K}_2\), \(\lambda_1 < 0\)
+& Degenerate unstable node & \\
+                                          & \(\mathbf{K}_1=a\mathbf{K}_2\), \(\lambda_1 < 0\)
+& Degenerate stable node & \multirow{2}{*}{\(\mathbf{X}(t)=c_1\mathbf{K}_1e^{\lambda_1 t}+c_2\left(\mathbf{K}_2e^{\lambda_1 t}+\mathbf{P}e^{\lambda_1 t}\right)\)}\\
+                                          & \(\mathbf{K}_1=a\mathbf{K}_2\), \(\lambda_1 > 0\)
+& Degenerate unstable node & \\\midrule
+\(\tau^2 - 4\Delta < 0\) & \(\tau = 0\)
+& Centre & \multirow{3}{*}{\parbox[c]{5.2cm}{\(\mathbf{X}=c_1\mathbf{X}_1+c_2\mathbf{X}_2\),
+\(\mathbf{K}_1=\mathbf{B}_1+i\mathbf{B}_2\)\\
+\(\mathbf{X}_1(t)=e^{\alpha t}\left( \mathbf{B}_1\cos(\beta t)-\mathbf{B}_2\sin(\beta t) \right)\)\\
+\(\mathbf{X}_2(t)=e^{\alpha t}\left( \mathbf{B}_2\cos(\beta t)+\mathbf{B}_1\sin(\beta t) \right)\)}}\\
+                                          & \(\tau \ne 0\), \(\alpha < 0\)
+& Stable spiral node & \\
+                                          & \(\tau \ne 0\), \(\alpha > 0\)
+& Unstable spiral node & \\\bottomrule
+    \end{tabular}
+\end{table}
+\subsection{Linearisation of nonlinear systems}
+For the nonlinear system \(\odv{x}{t}=F(x,y),\;\odv{y}{t}=G(x,y)\),
+there exists equilibrium or critical points where
+\(F(x,y)=G(x,y)=0\).
+If the system has a critical point at \(\left( x_e, y_e \right)\),
+we can derive an approximate linear system around that point.
+\begin{align*}
+    \dot{\mathbf{H}} &= \left.\mathbf{J}\right|_{\left( x_e, y_e \right)}\mathbf{H} \\
+    \begin{pmatrix} x-x_e \\ y-y_e \end{pmatrix}' &=
+    \left.\begin{pmatrix}
+        \pdv{F}{x} & \pdv{F}{y} \\
+        \pdv{G}{x} & \pdv{G}{y} \\
+    \end{pmatrix}\right|_{\left( x_e, y_e \right)}
+    \begin{pmatrix} x-x_e \\ y-y_e \end{pmatrix} 
+\end{align*}
+
+An alternate approach is to use the chain rule directly,
+\(\frac{\odv{x}{t}}{\odv{y}{t}}=\odv{x}{y}=\frac{F(x,y)}{G(x,y)}\).
+\subsection{Nullclines}
+For a linear system of differential equations \(\mathbf{X}=\begin{pmatrix}
+    x \\ y
+\end{pmatrix}'\),
+the curve along which \(x'=0\) is called the \(x\)-nullcline,
+and the curve along which \(y'=0\) is called the \(y\)-nullcline.
+The points where these nullclines intersect are steady states.
 
 \newpage
 \begin{appendix}
