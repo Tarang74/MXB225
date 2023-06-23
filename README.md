@@ -26,7 +26,6 @@ This repository provides **lecture notes** for **MXB225 - Modelling with Differe
 4. Power Series Solutions
 5. Laplace Transforms
 6. Phase Plane Analysis
-7. Second-Order Variation of Parameters
 
 ---
 
