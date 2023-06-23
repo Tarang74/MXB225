@@ -10,11 +10,9 @@
 
 Lecture notes download: [MXB225 Lecture Notes PDF](https://www.github.com/Tarang74/MXB225/raw/main/MXB225%20Lecture%20Notes.pdf)
 
-Exam notes download: [MXB225 Exam Notes PDF](https://www.github.com/Tarang74/MXB225/raw/main/MXB225%20Exam%20Notes.pdf)
-
 ---
 
-This repository provides **lecture notes** and **exam notes** for **MXB225 - Modelling with Differential Equations 1**.
+This repository provides **lecture notes** for **MXB225 - Modelling with Differential Equations 1**.
 
 *The contents of the lecture notes are described below.*
 
@@ -27,7 +25,7 @@ This repository provides **lecture notes** and **exam notes** for **MXB225 - Mod
 3. Nonconstant Coefficient ODEs
 4. Power Series Solutions
 5. Laplace Transforms
-6. Linear Systems
+6. Phase Plane Analysis
 7. Second-Order Variation of Parameters
 
 ---
