@@ -672,33 +672,33 @@ explicit definition. To do so, we must make use of partial fraction decompositio
 
 Given the fraction
 \begin{equation*}
-    \frac{P\left( x \right)}{Q\left( x \right)}
+    \frac{P\left( t \right)}{Q\left( t \right)}
 \end{equation*}
-where \(P\) and \(Q\) are polynomials in \(x\) and the degree of \(P\) is less than the degree of \(Q\),
+where \(P\) and \(Q\) are polynomials in \(t\) and the degree of \(P\) is less than the degree of \(Q\),
 we can decompose a fraction by considering the following cases:
 
 Assume \(Q\) is fully factored.
 \begin{description}
     \item[Case I:] \(Q\) has distinct polynomial factors:
         \begin{equation*}
-            Q\left( x \right) = q_1\left( x \right) q_2\left( x \right) \cdots q_k\left( x \right)
+            Q\left( t \right) = q_1\left( t \right) q_2\left( t \right) \cdots q_k\left( t \right)
         \end{equation*}
         then,
         \begin{equation*}
-            \frac{P\left( x \right)}{Q\left( x \right)} = \frac{A_1\left( x \right)}{q_1\left( x \right)} + \frac{A_2\left( x \right)}{q_2\left( x \right)} + \cdots + \frac{A_k\left( x \right)}{q_k\left( x \right)}.
+            \frac{P\left( t \right)}{Q\left( t \right)} = \frac{A_1\left( t \right)}{q_1\left( t \right)} + \frac{A_2\left( t \right)}{q_2\left( t \right)} + \cdots + \frac{A_k\left( t \right)}{q_k\left( t \right)}.
         \end{equation*}
         where \(A_i\) has the form:
         \begin{equation*}
-            A_i\left( x \right) = a_{i,n-1} x^{n - 1} + a_{i,n-2} x^{n - 2} + \cdots + a_{i,1} x + a_{i,0}
+            A_i\left( t \right) = a_{i,n-1} t^{n - 1} + a_{i,n-2} t^{n - 2} + \cdots + a_{i,1} t + a_{i,0}
         \end{equation*}
         where the order of \(A_i\) will be one less than the order of the denominator \(q_i\).
     \item[Case II:] \(Q\) has repeated polynomial factors:
         \begin{equation*}
-            Q\left( x \right) = q\left( x \right)^r
+            Q\left( t \right) = q\left( t \right)^r
         \end{equation*}
         then,
         \begin{equation*}
-            \frac{P\left( x \right)}{Q\left( x \right)} = \frac{A_1\left( x \right)}{q\left( x \right)} + \frac{A_2\left( x \right)}{q\left( x \right)^2} + \cdots + \frac{A_r\left( x \right)}{q\left( x \right)^r}.
+            \frac{P\left( t \right)}{Q\left( t \right)} = \frac{A_1\left( t \right)}{q\left( t \right)} + \frac{A_2\left( t \right)}{q\left( t \right)^2} + \cdots + \frac{A_r\left( t \right)}{q\left( t \right)^r}.
         \end{equation*}
         where the denominator will have increasing powers of \(q\).
     \item[Case III:] \(Q\) has both distinct and repeated polynomial factors,\\
@@ -764,81 +764,264 @@ and
     \end{cases}
 \end{equation*}
 \subsection{Properties of Laplace Transforms}
+\subsubsection{First Translation Theorem}
+\begin{equation*}
+    \mathscr{L}\left\{ e^{at} f\left( t \right) \right\} = F\left( s - a \right)
+\end{equation*}
+\subsubsection{Second Translation Theorem}
+\begin{equation*}
+    \mathscr{L}\left\{ f\left( t - a \right) u\left( t - a \right) \right\} = e^{-as} F\left( s \right)
+\end{equation*}
+\subsection{Linear Systems}
+A linear system of ODEs is a system of the form
+\begin{equation*}
+    \symbf{x}' = \symbf{A} \symbf{x}
+\end{equation*}
+where \(\symbf{x}\) is an \(n \times 1\) vector of functions \(x_1\left( t \right), x_2\left( t \right), \ldots, x_n\left( t \right)\).
+So far we have looked at cases where \(n = 1\) and \(n = 2\), however the methods we have used can be extended to higher order systems.
 
+To convert the \(n\)th order constant coefficient linear differential equation
+\begin{equation*}
+    a_n y^{\left( n \right)} + \cdots + a_2 y'' + a_1 y' + a_0 y = f\left( t \right)
+\end{equation*}
+into a first-order linear system, define the state variables \(x_1 = y\), \(x_2 = y'\), \(\ldots\), \(x_n = y^{\left( n - 1 \right)}\), so that
+\(\symbf{x} = \abracket*{x_1,\: x_2,\: \ldots,\: x_n}\). Then
+\begin{equation*}
+    \odv{}{t} \begin{bmatrix}
+        x_1    \\
+        x_2    \\
+        \vdots \\
+        x_n
+    \end{bmatrix} =
+    \begin{bmatrix}
+        0        & 1        & 0        & \cdots & 0           \\
+        0        & 0        & 1        & \cdots & 0           \\
+        \vdots   & \vdots   & \vdots   & \ddots & \vdots      \\
+        0        & 0        & 0        & \cdots & 1           \\
+        -a_0/a_n & -a_1/a_n & -a_2/a_n & \cdots & a_{n-1}/a_n
+    \end{bmatrix}
+    \begin{bmatrix}
+        x_1    \\
+        x_2    \\
+        \vdots \\
+        x_n
+    \end{bmatrix}.
+\end{equation*}
+The solution cases for systems of ODEs will be discussed in the next section.
 \newpage
-\section{Linear Systems}
-For a linear system
-\[
-    \mathbf{X}'=A\mathbf{X}
-\]
-solutions are superpositions of the form
-\[
-    \mathbf{X}(t)=\mathbf{K}e^{\lambda t}
-\]
-We can find such \(\lambda\) by solving
-\(\left|A-\lambda I\right|\) and substitute to find the corresponding \(K\) vectors.
-\subsection{Stability}
-The characteristic polynomial is
-\[
-    \lambda^2 - \tau \lambda + \Delta = 0
-\]
-where \(\tau = \Tr(A)\) and \(\Delta=|A|\).
-\(\mathbf{K}_i\) is the eigenvector corresponding to \(\lambda_i\).
-\begin{table}[h]
-    \small
-    \centering\begin{tabular}{c c c c}\toprule
-\multicolumn{2}{c}{Condition} & Behaviour & Solution \\\midrule
-\(\tau^2 - 4\Delta > 0\) & \(\tau < 0, \Delta > 0\)
-& Stable node & \multirow{3}{*}{\(\mathbf{X}(t)=c_1\mathbf{K}_1e^{\lambda_1 t}+c_2\mathbf{K}_2e^{\lambda_2 t}\)}\\
-                                          & \(\tau > 0, \Delta > 0\)
-& Unstable node & \\
-                                          & \(\Delta < 0\)
-& Saddle point & \\\midrule
-\(\tau^2 = 4\Delta\)     & \(\mathbf{K}_1\ne a\mathbf{K}_2\), \(\lambda_1 > 0\)
-& Degenerate stable node & \multirow{2}{*}{\(\mathbf{X}(t)=c_1\mathbf{K}_1e^{\lambda_1 t}+c_2\mathbf{K}_2e^{\lambda_1 t}\)}\\
-                                          & \(\mathbf{K}_1 \ne a\mathbf{K}_2\), \(\lambda_1 < 0\)
-& Degenerate unstable node & \\
-                                          & \(\mathbf{K}_1=a\mathbf{K}_2\), \(\lambda_1 < 0\)
-& Degenerate stable node & \multirow{2}{*}{\(\mathbf{X}(t)=c_1\mathbf{K}_1e^{\lambda_1 t}+c_2\left(\mathbf{K}_2e^{\lambda_1 t}+\mathbf{P}e^{\lambda_1 t}\right)\)}\\
-                                          & \(\mathbf{K}_1=a\mathbf{K}_2\), \(\lambda_1 > 0\)
-& Degenerate unstable node & \\\midrule
-\(\tau^2 - 4\Delta < 0\) & \(\tau = 0\)
-& Centre & \multirow{3}{*}{\parbox[c]{5.2cm}{\(\mathbf{X}=c_1\mathbf{X}_1+c_2\mathbf{X}_2\),
-\(\mathbf{K}_1=\mathbf{B}_1+i\mathbf{B}_2\)\\
-\(\mathbf{X}_1(t)=e^{\alpha t}\left( \mathbf{B}_1\cos(\beta t)-\mathbf{B}_2\sin(\beta t) \right)\)\\
-\(\mathbf{X}_2(t)=e^{\alpha t}\left( \mathbf{B}_2\cos(\beta t)+\mathbf{B}_1\sin(\beta t) \right)\)}}\\
-                                          & \(\tau \ne 0\), \(\alpha < 0\)
-& Stable spiral node & \\
-                                          & \(\tau \ne 0\), \(\alpha > 0\)
-& Unstable spiral node & \\\bottomrule
-    \end{tabular}
-\end{table}
-\subsection{Linearisation of nonlinear systems}
-For the nonlinear system \(\odv{x}{t}=F(x,y),\;\odv{y}{t}=G(x,y)\),
-there exists equilibrium or critical points where
-\(F(x,y)=G(x,y)=0\).
-If the system has a critical point at \(\left( x_e, y_e \right)\),
-we can derive an approximate linear system around that point.
+\section{Phase Plane Analysis}
+When a differential equation cannot be solved analytically, we often wish to draw
+conclusions about its qualitative behaviour.
+This is particularly useful for nonlinear differential equations, where the methods discussed so far
+cannot be used to find an explicit solution.
+
+The phase space method is a graphical method for analysing a system through a phase portait,
+where the flow of states is represented by a vector field.
+The phase space is a space of the state variables of the system (i.e., the derivatives of each dependent variable).
+In 1 dimension, this is known as a phase line, and in 2 dimensions, a phase plane.
+
+This plot allows us to visualise limiting behaviour in various regions of the
+phase space.
+\subsection{Autonomous Systems}
+For each of the systems discussed in this section, consider an autonomous system
+\begin{equation*}
+    \odv{x}{t} = g\left( x \right)
+\end{equation*}
+that does not have explicit dependence on \(t\).
+\subsubsection{Equilibrium Points}
+The point where \(g\left( x \right) = 0\) is known as \textbf{equilibrium point} \(x_e\), such that if \(x\left( 0 \right) = x_e\) is an initial condition, the system has a trivial solution: \(x\left( t \right) = 0\).
+\subsubsection{Stability}
+The stability of each equilibrium point can be determined by considering the behaviour of the system in the vicinity of the equilibrium point.
+An equilibrium point is \textbf{stable} if the system returns to the equilibrium point after a small perturbation,
+and \textbf{unstable} if the system diverges from the equilibrium point after a small perturbation.
+\begin{itemize}
+    \item When \(g'\left( x_e \right) < 0\), the equilibrium point is \textbf{stable}.
+    \item When \(g'\left( x_e \right) > 0\), the equilibrium point is \textbf{unstable}.
+\end{itemize}
+To understand why this is the case, consider the Taylor series expansion of \(g\left( x \right)\) about \(x_e\).
+\begin{equation*}
+    g\left( x \right) = g\left( x_e \right) + g'\left( x_e \right) \left( x - x_e \right) + \mathcal{O}\left( x^2 \right)
+\end{equation*}
+such that when \(x\) is close to \(x_e\), the behaviour of the system is approximately linear:
+\begin{equation*}
+    g\left( x \right) \approx g'\left( x_e \right) \left( x - x_e \right).
+\end{equation*}
+By solving this linear system, we find
 \begin{align*}
-    \dot{\mathbf{H}} &= \left.\mathbf{J}\right|_{\left( x_e, y_e \right)}\mathbf{H} \\
-    \begin{pmatrix} x-x_e \\ y-y_e \end{pmatrix}' &=
-    \left.\begin{pmatrix}
-        \pdv{F}{x} & \pdv{F}{y} \\
-        \pdv{G}{x} & \pdv{G}{y} \\
-    \end{pmatrix}\right|_{\left( x_e, y_e \right)}
-    \begin{pmatrix} x-x_e \\ y-y_e \end{pmatrix} 
+    \odv{x}{t}                                 & \approx g'\left( x_e \right) \left( x - x_e \right) \\
+    \frac{1}{x - x_e} \odv{x}{t}               & \approx g'\left( x_e \right)                        \\
+    \int \frac{1}{x - x_e} \odv{x}{t} \odif{t} & \approx \int g'\left( x_e \right) \odif{t}          \\
+    \ln{\left( x - x_e \right)}                & \approx g'\left( x_e \right) t + c                  \\
+    x - x_e                                    & \approx A e^{g'\left( x_e \right) t}                \\
+    x                                          & \approx x_e + A e^{g'\left( x_e \right) t}
 \end{align*}
+near the equilibrium point. Therefore,
+\begin{itemize}
+    \item If \(g'\left( x_e \right) < 0\): \(x \to x_e\) as \(t \to \infty\).
+    \item If \(g'\left( x_e \right) > 0\): \(x\) diverges from \(x_e\) as \(t \to \infty\).
+\end{itemize}
+When the derivative is unobtainable, we can plot the function \(g\left( x \right)\) w.r.t.\ \(x\).
+Any intersections with the \(x\)-axis are equilibrium points, and the stability of each point can be determined by considering the sign of \(g\left( x \right)\) around each equilibrium point.
 
+By determining local behaviour around each equilibrium point, we can infer the global behaviour of the system.
+\subsection{Linear Systems}
+Given the linear system
+\begin{equation*}
+    \symbf{\dot{x}} = \symbf{A} \symbf{x},
+\end{equation*}
+solutions are superpositions of the form:
+\begin{equation*}
+    \symbf{x} = e^{\lambda t} \symbf{v}
+\end{equation*}
+where (\(\lambda\), \(\symbf{v}\)) are eigenpairs of \(\symbf{A}\).
+For a 2D system, the characteristic polynomial for \(\symbf{A}\) is given by
+\begin{equation*}
+    P\left( \lambda \right) = \lambda^2 - \tau \lambda + \Delta
+\end{equation*}
+where \(\tau = \Tr{\left( \symbf{A} \right)}\) and \(\Delta = \det{\left( \symbf{A} \right)}\).
+The eigenvalues \(\lambda\) are the roots of \(P\left( \lambda \right)\).
+\subsection{Stability}
+In a linear system, we can construct phase portaits about the equilibrium point at the origin.
+The following sections consider each case of eigenvalues.
+\subsubsection{Real Distinct Eigenvalues}
+\underline{The following case is possible when \(\tau^2 - 4\Delta > 0\).} \\[1em]
+When \(\lambda_1\) and \(\lambda_2\) are real and distinct eigenvalues,
+with corresponding eigenvectors \(\symbf{v}_1\) and \(\symbf{v}_2\), then the general solution is given by
+\begin{equation*}
+    \symbf{x}\left( t \right) = c_1 e^{\lambda_1 t} \symbf{v}_1 + c_2 e^{\lambda_2 t} \symbf{v}_2.
+\end{equation*}
+The stability of this system is determined by the sign of \(\lambda_1\) and \(\lambda_2\).
+\begin{itemize}
+    \item When \(\lambda_1, \lambda_2 < 0\), the origin is a \textbf{stable node}.
+    \item When \(\lambda_1, \lambda_2 > 0\), the origin is an \textbf{unstable node}.
+    \item When \(\lambda_1 < 0 < \lambda_2\), the origin is a \textbf{saddle point}.
+\end{itemize}
+To draw a phase portait, draw two lines spanned by the eigenvectors \(\symbf{v}_1\) and \(\symbf{v}_2\),
+where the direction of the arrows on each line is determined by the sign of the corresponding eigenvalue.
+\subsubsection{Real Repeated Eigenvalues}
+\underline{The following case is possible when \(\tau^2 - 4\Delta = 0\).} \\[1em]
+When \(\lambda\) is a real repeated eigenvalue, and
+if \(\lambda\) has two linearly independent eigenvectors \(\symbf{v}_1\)
+and \(\symbf{v}_2\), the general solution is given by
+\begin{equation*}
+    \symbf{x}\left( t \right) = c_1 e^{\lambda t} \symbf{v}_1 + c_2 e^{\lambda t} \symbf{v}_2 = e^{\lambda t} \left( c_1 \symbf{v}_1 + c_2 \symbf{v}_2 \right).
+\end{equation*}
+If \(\lambda\) only has one linearly independent eigenvector \(\symbf{v}\), the general solution is given by
+\begin{equation*}
+    \symbf{x}\left( t \right) = c_1 e^{\lambda t} \symbf{v} + c_2 \left( t e^{\lambda t} \symbf{v} + e^{\lambda t} \symbf{w} \right).
+\end{equation*}
+The stability of this system is determined by the sign of \(\lambda\).
+\begin{itemize}
+    \item When \(\lambda < 0\), the origin is a \textbf{degenerate stable node}.
+    \item When \(\lambda > 0\), the origin is a \textbf{degenerate unstable node}.
+\end{itemize}
+To draw a phase portait, draw one/two lines spanned by the eigenvector(s) \(\symbf{v}\),
+where the direction of the arrows on each line is determined by the sign of \(\lambda\).
+\subsubsection{Complex Conjugate Eigenvalues}
+\underline{The following case is possible when \(\tau^2 - 4\Delta < 0\).} \\[1em]
+When \(\lambda = \sigma \pm \omega i\) are complex conjugate eigenvalues,
+with corresponding eigenvectors \(\symbf{v} = \symbf{a} \pm \symbf{b} i\), then the general solution is given by
+\begin{equation*}
+    \symbf{x}\left( t \right) = e^{\sigma t} \left[ c_1 \left( \symbf{a} \cos{\left( \omega t \right)} - \symbf{b} \sin{\left( \omega t \right)} \right) + c_2 \left( \symbf{a} \sin{\left( \omega t \right)} + \symbf{b} \cos{\left( \omega t \right)} \right) \right].
+\end{equation*}
+The stability of this system is determined by the real part of \(\lambda\).
+\begin{itemize}
+    \item When \(\alpha < 0\), the origin is a \textbf{stable spiral}.
+    \item When \(\alpha > 0\), the origin is an \textbf{unstable spiral}.
+    \item When \(\alpha = 0\), the origin is a \textbf{centre}.
+\end{itemize}
+To draw a phase portait, choose an arbitary initial state \(\symbf{x}_0\) (i.e., \(\symbf{x}_0 = \abracket{1,\: 0}\)),
+the direction that this vector points in will determine the orientation of the spiral. The same applies for a centre,
+however a centre will be composed of closed ellipses.
+\begin{table}[H]
+    \centering
+    \begin{tabular}{ccc}
+        \toprule
+        \textbf{Condition}                                      & \textbf{Behaviour}       & \textbf{Solution}                                                                                                                                                       \\
+        \midrule
+        \multicolumn{3}{c}{Real distinct eigenvalues \(\lambda_1\), \(\lambda_2\) with eigenvectors \(\symbf{v}_1\), \(\symbf{v}_2\) (\(\tau^2 - 4\Delta > 0\))}                                                                                                     \\
+        \midrule
+        \(\lambda_1, \lambda_2 < 0\) (\(\tau < 0, \Delta > 0\)) & Stable node              & \multirow{3}{*}{\(\symbf{x}\left( t \right) = c_1 e^{\lambda_1 t} \symbf{v}_1 + c_2 e^{\lambda_2 t} \symbf{v}_2\)}                                                      \\
+        \(\lambda_1, \lambda_2 > 0\) (\(\tau > 0, \Delta > 0\)) & Unstable node            &                                                                                                                                                                         \\
+        \(\lambda_1 < 0 < \lambda_2\) (\(\Delta < 0\))          & Saddle point             &                                                                                                                                                                         \\
+        \midrule
+        \multicolumn{3}{c}{Real repeated eigenvalues \(\lambda\) with eigenvectors \(\symbf{v}_1\), \(\symbf{v}_2\) (\(\tau^2 - 4\Delta = 0\))}                                                                                                                      \\
+        \midrule
+        \(\lambda > 0\)                                         & Degenerate stable node   & \multirow{2}{*}{\(\symbf{x}\left( t \right) = e^{\lambda t} \left( c_1 \symbf{v}_1 + c_2 \symbf{v}_2 \right)\)}                                                         \\
+        \(\lambda < 0\)                                         & Degenerate unstable node &                                                                                                                                                                         \\
+        \midrule
+        \multicolumn{3}{c}{Real repeated eigenvalues \(\lambda\) with eigenvector \(\symbf{v}\).\ \(\symbf{w}\) satisfies \(\left( \lambda I - \symbf{A} \right) \symbf{w} = \symbf{v}\) (\(\tau^2 - 4\Delta = 0\))}                                                 \\
+        \midrule
+        \(\lambda < 0\)                                         & Degenerate stable node   & \multirow{2}{*}{\(\symbf{x}\left( t \right) = c_1 e^{\lambda t} \symbf{v} + c_2 \left( t e^{\lambda t} \symbf{v} + e^{\lambda t} \symbf{w} \right)\)}                   \\
+        \(\lambda > 0\)                                         & Degenerate unstable node &                                                                                                                                                                         \\
+        \midrule
+        \multicolumn{3}{c}{Complex conjugate eigenvalues \(\lambda = \sigma \pm \omega i\) with eigenvectors \(\symbf{v} = \symbf{a} \pm \symbf{b} i\) (\(\tau^2 - 4\Delta < 0\))}                                                                                   \\
+        \midrule
+        \(\sigma < 0\) (\(\tau \ne 0\))                         & Stable spiral            & \multirow{3}{*}{\(\begin{aligned}
+                                                                                                                       %    \symbf{x}\left( t \right)   & = c_1 \symbf{x}_1\left( t \right) + c_2 \symbf{x}_2\left( t \right)                                             \\
+                                                                                                                       x_1\left( t \right) & = e^{\sigma t} \left( \symbf{a} \cos{\left( \omega t \right)} - \symbf{b} \sin{\left( \omega t \right)} \right) \\
+                                                                                                                       x_2\left( t \right) & = e^{\sigma t} \left( \symbf{a} \sin{\left( \omega t \right)} + \symbf{b} \cos{\left( \omega t \right)} \right)
+                                                                                                                   \end{aligned}\)} \\
+        \(\sigma > 0\) (\(\tau \ne 0\))                         & Unstable spiral          &                                                                                                                                                                         \\
+        \(\sigma = 0\) (\(\tau = 0\))                           & Centre                   &                                                                                                                                                                         \\
+        \bottomrule
+    \end{tabular}
+    % \caption{} % \label{}
+\end{table}
+\subsection{Nonlinear Systems}
+Consider the 2D nonlinear system
+\begin{align*}
+    \dot{x_1} = F\left( x,\: y \right) \\
+    \dot{x_2} = G\left( x,\: y \right)
+\end{align*}
+\textbf{critical points} exist where \(F\left( x,\: y \right) = G\left( x,\: y \right) = 0\).
+If a system has a critical point at \(\symbf{x}_e = \abracket{x_e,\: y_e}\),
+we can find a local linearisation around that point.
+\begin{definition}[Jacobian]
+    The Jacobian of a system is defined as
+    \begin{equation*}
+        \symbf{J} = \begin{bmatrix}
+            F_x & F_y \\
+            G_x & G_y \\
+        \end{bmatrix}
+    \end{equation*}
+\end{definition}
+The local behaviour of a nonlinear system can therefore be approximated by analysing the following linear system:
+\begin{align*}
+    \symbf{\dot{h}}                                            & = \left.\symbf{J}\right|_{\left( x_e,\: y_e \right)} \symbf{h} \\
+    \odv{}{t} \begin{bmatrix} x - x_e \\ y - y_e \end{bmatrix} & =
+    \left.\begin{bmatrix}
+              F_x & F_y \\
+              G_x & G_y \\
+          \end{bmatrix}\right|_{\left( x_e,\: y_e \right)}
+    \begin{bmatrix} x - x_e \\ y - y_e \end{bmatrix}
+\end{align*}
 An alternate approach is to use the chain rule directly,
-\(\frac{\odv{x}{t}}{\odv{y}{t}}=\odv{x}{y}=\frac{F(x,y)}{G(x,y)}\).
+\(\displaystyle\frac{\odv{x}{t}}{\odv{y}{t}} = \odv{x}{y} = \frac{F(x,y)}{G(x,y)}\).
 \subsection{Nullclines}
-For a linear system of differential equations \(\mathbf{X}=\begin{pmatrix}
-    x \\ y
-\end{pmatrix}'\),
-the curve along which \(x'=0\) is called the \(x\)-nullcline,
-and the curve along which \(y'=0\) is called the \(y\)-nullcline.
-The points where these nullclines intersect are steady states.
+The curve along which \(x' = 0\) is called the \(x\)-nullcline,
+and the curve along which \(y' = 0\) is called the \(y\)-nullcline.
+The points where these nullclines intersect are called \textbf{steady states}.
+\subsection{Parameterised Systems}
+When a system is parametrised by an unknown constant \(\mu\), multiple phase portraits can be drawn for different values of \(\mu\).
+Consider the 1D system
+\begin{equation*}
+    \dot{x} = f\left( \mu,\: x \right)
+\end{equation*}
+By observing the phase plane plot of the function \(f\left( \mu, \: x \right)\) against \(x\) for different values of \(\mu\),
+we can plot the behaviour of \(f\) on a \textbf{bifurcation diagram}.
 
+In this diagram, the horizontal axis contains the values of \(\mu\), and the vertical axis contains the values of \(x\).
+By plotting each equilibrium point as a function of \(\mu\),
+we can indicate the stability along each equilibrium point by drawing arrows pointing upwards and downwards depending on
+the phase plane from earlier.
+
+A saddle-node \textbf{bifurcation} occurs at the parameter value \(\mu = \mu_0\) if as
+\(\mu\) passes through \(\mu_0\), the system goes from no equilibrium points to one or more equilibrium points.
+Here \(\mu_0\) is called a \textbf{bifurcation point}.
+
+If by increasing \(\mu\) past \(\mu_0\), the system goes from one equilibrium point to three equilibrium points,
+then the system has a \textbf{pitchfork bifurcation}.
 \newpage
 \begin{appendix}
     \section{Second-Order Variation of Parameters}
